@@ -14,6 +14,7 @@ class User(AbstractUser):
     name = models.CharField(_("Full Name"),max_length=50,null=True,blank=True)
     dob = models.DateField(_("Date of Birth"),null=True,blank=True)
     
+    nid = models.CharField(_("NID"),max_length=20,null=True,blank=True)
     is_manager = models.BooleanField(_("Manager"),default=False)
     is_employee = models.BooleanField(_("Employee"),default=True)
     
