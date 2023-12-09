@@ -8,7 +8,7 @@
         <div
         class="bg-gray-50 w-full p-4 shadow-xl rounded-md">
             <h3 class="text-2xl font-bold mb-4">QuickView</h3>
-            <div class="grid grid-cols-3 gap-4">
+            <div class="grid grid-cols-4 gap-4">
                 <div class="card bg-blue-900 rounded p-4 text-center text-white grid gap-2">
                     <i class="fa-solid fa-clipboard-user text-4xl"></i>
                     <h4 class="text-2xl">Attendance</h4>
@@ -24,11 +24,25 @@
                     <a href="{% url "equipment:book" %}" class="underline cursor-pointer">Manage Equipment Activities</a>
                 </div>
                 <div class="card bg-blue-900 rounded p-4 text-center text-white grid gap-2">
+                    <i class="fa-solid fa-user-clock text-4xl"></i>
+                    <h4 class="text-2xl">Coach</h4>
+                    <a href="{% url "coach:book" %}" class="underline cursor-pointer">Manage Coach Activities</a>
+                </div>
+                <div class="card bg-blue-900 rounded p-4 text-center text-white grid gap-2">
                     <i class="fa-solid fa-users text-4xl"></i>
                     <h4 class="text-2xl">Members</h4>
-                    <a class="underline cursor-pointer">Manage Member Activities</a>
+                    <a href="{% url "member:bill" %}" class="underline cursor-pointer">Manage Member Activities</a>
                 </div>
             </div>
+        </div>
+        <div
+        class="bg-gray-50 w-full p-4 shadow-xl rounded-md mt-4">
+            <h3 class="text-2xl font-bold mb-4">Schedule</h3>
+            <ul>
+                <li>
+                    1230 1230
+                </li>
+            </ul>
         </div>
     </div>
 </div>

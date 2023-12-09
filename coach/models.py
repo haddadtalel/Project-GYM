@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from schedule.models import Schedule
+from user.models import User
+from member.models import Member
 
 GENDER_CHOICES = [
     ('male', 'Male'),
@@ -30,3 +32,12 @@ class Coach(models.Model):
     def __str__(self) :
         return f'{self.name}'
 
+class CoachActivityTrack(models.Model):
+    start_time = models.DateField(_("Booking start"),null=True,blank=True)
+    end_time = models.DateField(_("Booking end"),null=True,blank=True)
+    booked_by = models.ForeignKey(User, on_delete=models.CASCADE,null=True,blank=True)
+    booked_for =models.ForeignKey(Member, on_delete=models.CASCADE,null=True,blank=True)
+    coach = models.ForeignKey(Coach, on_delete=models.CASCADE,null=True,blank=True)
+
+    def __str__(self) -> str:
+        return f'{self.equipment} | {self.start_time} - {self.end_time}'

@@ -1,0 +1,67 @@
+{% extends "../base.html" %}
+
+{% block body %}
+<div class="conponentSection p-5 sm:ml-64 bg-gray-200">
+    <div class="componentWrapper">
+        <!-- Entry Form starts  -->
+        <div class="formSection bg-white p-4 rounded shadow-md mb-4">
+            <h3 class="text-2xl font-bold mb-4">Search</h3>
+            <form>
+                <div class="grid grid-cols-2 gap-4">
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="searchCoach" type="text"
+                        placeholder="Search For Member" />
+                </div>
+            </form>
+        </div>     
+        <div class="bg-gray-50 p-4 shadow-xl rounded-md mt-4">
+            <h3 class="text-2xl font-semibold mb-4">Member List</h3>
+            <div>
+                <div class="relative overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="text-sm uppercase bg-blue-900 text-gray-50 text-center">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">Member Id</th>
+                                <th scope="col" class="px-6 py-3">Name</th>
+                                <th scope="col" class="px-6 py-3">Phone</th>
+                                <th scope="col" class="px-6 py-3">Package</th>
+                                <th scope="col" class="px-6 py-3">Due</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="bg-white border text-sm text-center">
+                                <td class="px-6 py-4">MID-101</td>
+                                <td class="px-6 py-4">Marco</td>
+                                <td class="px-6 py-4">Good Condition</td>
+                                <td class="px-6 py-4">Good Condition</td>
+                                <td class="px-6 py-4">Good Condition</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>  
+        <div class="bg-gray-50 p-4 shadow-xl rounded-md mt-4">
+            <div class="py-4 text-red-600 font-bold">
+                Wrong Member Id
+            </div>
+            <h3 class="text-2xl font-semibold mb-4">Pay Package Bill</h3>
+            <form class="grid grid-cols-2 gap-4">
+                <!-- Member Id -->
+                <input class="border w-full p-4 leading-tight bg-slate-100" name="serial" type="text"
+                placeholder="Member Id" />
+                <!-- Amount -->
+                <input class="border w-full p-4 leading-tight bg-slate-100" name="memId" type="text"
+                placeholder="Member Id" />
+                <div class="col-span-2">
+                    <button
+                      class="bg-blue-900 text-white font-bold py-2 px-4 w-full"
+                      type="submit">
+                      Pay
+                    </button>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

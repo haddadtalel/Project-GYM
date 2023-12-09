@@ -1,6 +1,8 @@
 from django.db import models
 from schedule.models import Schedule
 from django.utils.translation import gettext_lazy as _
+from user.models import User
+
 # Create your models here.
 
 class EquipmentType(models.Model):
@@ -23,9 +25,11 @@ class Equipment(models.Model):
 class EquipmentActivityTrack(models.Model):
     start_time = models.DateField(_("Booking start"),null=True,blank=True)
     end_time = models.DateField(_("Booking end"),null=True,blank=True)
-    # booked_by = 
-    # booked_for =
-    equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
+
+    booked_by = models.ForeignKey(User, on_delete=models.CASCADE,null=True,blank=True)
+    booked_for =models.ForeignKey('member.Member', on_delete=models.CASCADE,null=True,blank=True)
+
+    equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE,null=True,blank=True)
 
     def __str__(self) -> str:
         return f'{self.equipment} | {self.start_time} - {self.end_time}'

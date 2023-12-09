@@ -6,7 +6,10 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     # Redirect the user if he is authenticated
     if request.user.is_authenticated:
-        return redirect('/member/')
+        if request.user.is_manager:
+            return redirect('/managerDashboard/')
+        else:
+            return redirect('/employeeDashboard/')
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
@@ -16,7 +19,7 @@ def index(request):
             if next_url:
                 success_url = next_url
             else:
-                success_url = "/coach/"
+                success_url = "/employeeDashboard/"
             login(request,user)   
             # Redirect the user to suitable url
             return redirect(success_url)
@@ -27,8 +30,15 @@ def logout(request):
     lg(request)
     return redirect("/")
 
+@login_required
 def managerDashboard(request):
     return render(request, "dashboard/manager.html")
 
+@login_required
 def employeeDashboard(request):
+    if request.user.is_manager:
+        return redirect('/managerDashboard/')
     return render(request, "dashboard/employee.html")
+
+def coachDashboard(request):
+    return render(request,"dashboard/coach.html")

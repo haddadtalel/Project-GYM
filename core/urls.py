@@ -11,6 +11,7 @@ urlpatterns = [
 
     path('managerDashboard/', views.managerDashboard, name='managerDashboard'),
     path('employeeDashboard/', views.employeeDashboard, name='employeeDashboard'),
+    path('coachDashboard/', views.coachDashboard, name='coachDashboard'),
 
     path('user/', include("user.urls",namespace="user")),
     path('schedule/', include("schedule.urls",namespace="schedule")),

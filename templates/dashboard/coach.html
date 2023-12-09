@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- tailwind cdn  -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+</head>
+
+<body>
+    <main>
+        <!-- component sections starts  -->
+        <div class="conponentSection p-5 bg-gray-200">
+            <div class="componentWrapper">
+                <!-- Entry Form starts  -->
+                <div class="formSection bg-white p-4 rounded shadow-md mb-4">
+                    <a href="{% url "login" %}" class="underline inline-block mb-4">Back to Login</a>
+                    <h3 class="text-2xl font-bold mb-4">Search</h3>
+                    <form>
+                        <div class="grid grid-cols-2 gap-4">
+                            <input class="border w-full p-4 leading-tight bg-slate-100" name="searchCoach" type="text"
+                                placeholder="Search For Coach" />
+                        </div>
+                    </form>
+                </div>
+                <div class="bg-gray-50 w-full p-4 shadow-xl rounded-md mt-4">
+                    <h3 class="text-2xl font-bold mb-4">Schedule</h3>
+                    <ul>
+                        <li>
+                            1230 1230
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-gray-50 p-4 shadow-xl rounded-md mt-4">
+                    <h3 class="text-2xl font-semibold mb-4">Personal Session History</h3>
+                    <div>
+                        <div class="relative overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="text-sm uppercase bg-blue-900 text-gray-50 text-center">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3">Coach Id</th>
+                                        <th scope="col" class="px-6 py-3">Name</th>
+                                        <th scope="col" class="px-6 py-3">Date</th>
+                                        <th scope="col" class="px-6 py-3">For</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="bg-white border text-sm text-center">
+                                        <td class="px-6 py-4">MID-101</td>
+                                        <td class="px-6 py-4">Marco</td>
+                                        <td class="px-6 py-4">Good Condition</td>
+                                        <td class="px-6 py-4">Good Condition</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
