@@ -6,3 +6,6 @@ def index(request):
 
 def edit(request,pk):
     return render(request,"equipment/edit.html")
+
+def book(request):
+    return render(request,"equipment/book.html")

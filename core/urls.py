@@ -10,6 +10,7 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
 
     path('managerDashboard/', views.managerDashboard, name='managerDashboard'),
+    path('employeeDashboard/', views.employeeDashboard, name='employeeDashboard'),
 
     path('user/', include("user.urls",namespace="user")),
     path('schedule/', include("schedule.urls",namespace="schedule")),

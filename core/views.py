@@ -29,3 +29,6 @@ def logout(request):
 
 def managerDashboard(request):
     return render(request, "dashboard/manager.html")
+
+def employeeDashboard(request):
+    return render(request, "dashboard/employee.html")
