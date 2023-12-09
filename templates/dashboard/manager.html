@@ -1,0 +1,133 @@
+{% extends "../base.html" %}
+
+{% block body %}
+<!-- component sections starts  -->
+<div class="conponentSection p-5 sm:ml-64 bg-gray-200">
+    <div class="componentWrapper">
+        <!-- Quick View  -->
+        <div
+        class="bg-gray-50 w-full p-4 shadow-xl rounded-md">
+            <div class="grid grid-cols-3 gap-4">
+                <div class="card bg-blue-900 rounded p-4 text-center text-white grid gap-2">
+                    <i class="fa-solid fa-dumbbell text-4xl"></i>
+                    <h4 class="text-2xl">Coaches</h4>
+                    <p>0</p>
+                </div>
+                <div class="card bg-blue-900 rounded p-4 text-center text-white grid gap-2">
+                    <i class="fa-solid fa-clipboard-user text-4xl"></i>
+                    <h4 class="text-2xl">Stuffs</h4>
+                    <p>0</p>
+                </div>
+                <div class="card bg-blue-900 rounded p-4 text-center text-white grid gap-2">
+                    <i class="fa-solid fa-users text-4xl"></i>
+                    <h4 class="text-2xl">Members</h4>
+                    <p>0</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="componentWrapper mt-8">
+        <div class="bg-gray-50 w-full p-4 shadow-xl rounded-md">
+        <h2 class="text-4xl font-bold my-4">Overview for month: </h2>
+           <div class="grid grid-cols-3 gap-4">
+            <div class="col-1 border p-2">
+                <h3 class="text-xl font-semibold border-b">Pending Coach Salary</h3>
+                <ul>
+                    <li class="flex justify-between">
+                        <span>Name</span>
+                        <span>Amount</span>
+                    </li>
+                    <li class="flex justify-between">
+                        <span>Name</span>
+                        <span>Amount</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-2 border p-2">
+                <h3 class="text-xl font-semibold border-b">Pending Employee Salary</h3>
+                <ul>
+                    <li class="flex justify-between">
+                        <span>Name</span>
+                        <span>Amount</span>
+                    </li>
+                    <li class="flex justify-between">
+                        <span>Name</span>
+                        <span>Amount</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-3 border p-2">
+                <h3 class="text-xl font-semibold border-b">New Members</h3>
+                <ul>
+                    <li class="flex justify-between">
+                        <span>Name</span>
+                        <span>Package</span>
+                    </li>
+                    <li class="flex justify-between">
+                        <span>Name</span>
+                        <span>Package</span>
+                    </li>
+                </ul>
+            </div>
+           </div>
+        </div>
+    </div>
+    <div class="componentWrapper mt-8">
+        <div
+        class="bg-gray-50 w-full p-4 shadow-xl rounded-md">
+            <h3 class="text-center text-2xl font-bold my-4">Income Chart</h3>
+            <canvas id="incomeChart"></canvas>
+            <h3 class="text-center text-2xl font-bold my-4">Expense Chart</h3>
+            <canvas id="expenseChart"></canvas>
+        </div>
+    </div>
+  
+</div>
+
+<!-- component section ends -->
+{% endblock body %}
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+ const income = document.getElementById('incomeChart');
+ const expense = document.getElementById('expenseChart');
+
+new Chart(income, {
+  type: 'bar',
+  data: {
+    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    datasets: [{
+      label: '# of Votes',
+      data: [12, 19, 3, 5, 2, 3],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+new Chart(expense, {
+  type: 'bar',
+  data: {
+    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    datasets: [{
+      label: '# of Votes',
+      data: [12, 19, 3, 5, 2, 3],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+</script>
+{% endblock js %}

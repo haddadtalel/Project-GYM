@@ -1,0 +1,101 @@
+{% extends "../base.html" %}
+
+{% block body %}
+   <!-- component sections starts  -->
+   <div class="conponentSection p-5 sm:ml-64 bg-gray-200">
+    <div class="componentWrapper">
+        <!-- Entry Form starts  -->
+        <div class="formSection bg-white p-4 rounded shadow-md mb-4">
+            <h3 class="text-2xl font-bold mb-4">New Equipment Form</h3>
+            <form class="grid grid-cols-2 gap-4">
+                <!-- Col 1 -->
+                <div class="grid gap-2">
+                    <!-- Name -->
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="name" type="text" placeholder="Name" required />
+                    <!-- Brand  -->
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="brand" type="text" placeholder="Brand" />
+                    <!-- Serial -->
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="serial" type="text" placeholder="Serial" required />
+                </div>
+                <!-- Col 2 -->
+                <div class="grid gap-2">
+                    <!-- Price -->
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="price" type="number" placeholder="Price" required />                 
+                    <!-- Equipment Type  -->
+                    <select name="eqType" class="border w-full p-4 leading-tight bg-slate-100" required>
+                      <option hidden>Equipment Type</option>
+                      <option value="general">General</option>
+                      <option value="premium">Premium</option>
+                    </select>      
+                     <!-- Cost Condition -->
+                     <select name="costCondition" class="border w-full p-4 leading-tight bg-slate-100" required>
+                      <option hidden>Cost Condition</option>
+                      <option value="store">Store</option>
+                      <option value="separate">Separate</option>
+                    </select>  
+                </div>
+                <div class="col-span-3">
+                    <button
+                      class="bg-blue-900 text-white font-bold py-2 px-4 w-full"
+                      type="submit">
+                      Add New Equipment
+                    </button>
+                  </div>
+            </form>
+        </div>
+      <!-- List section starts  -->
+      <div class="bg-gray-50 p-4 shadow-xl rounded-md">
+        <div class="relative overflow-x-auto">
+          <table class="w-full">
+            <thead
+              class="text-sm uppercase bg-blue-900 text-gray-50 text-center"
+            >
+              <tr>
+                <th scope="col" class="px-6 py-3">Serial</th>
+                <th scope="col" class="px-6 py-3">Name</th>
+                <th scope="col" class="px-6 py-3">Status</th>
+                <th scope="col" class="px-6 py-3">View</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="bg-white border text-sm text-center">
+                <td class="px-6 py-4">MID-101</td>
+                <td class="px-6 py-4">Marco</td>
+                <td class="px-6 py-4">Active</td>
+                <td class="px-6 py-4"><a class="underline" href="/equipment/edit/1">View</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+        <!-- Track starts  -->
+        <div class="bg-gray-50 p-4 shadow-xl rounded-md mt-4">
+          <h3 class="text-2xl font-bold mb-4">Equipment Activity Track</h3>
+          <div class="relative overflow-x-auto">
+            <table class="w-full">
+              <thead
+                class="text-sm uppercase bg-blue-900 text-gray-50 text-center"
+              >
+                <tr>
+                  <th scope="col" class="px-6 py-3">Serial</th>
+                  <th scope="col" class="px-6 py-3">Name</th>
+                  <th scope="col" class="px-6 py-3">Booked By</th>
+                  <th scope="col" class="px-6 py-3">Booked To</th>
+                  <th scope="col" class="px-6 py-3">Duration</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-white border text-sm text-center">
+                  <td class="px-6 py-4">MID-101</td>
+                  <td class="px-6 py-4">Marco</td>
+                  <td class="px-6 py-4">Active</td>
+                  <td class="px-6 py-4">Active</td>
+                  <td class="px-6 py-4">Active</td>            
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+  </div>
+{% endblock body %}

@@ -1,0 +1,47 @@
+{% extends "../base.html" %}
+
+{% block body %}
+   <!-- component sections starts  -->
+   <div class="conponentSection p-5 sm:ml-64 bg-gray-200">
+    <div class="componentWrapper">
+            <!-- Entry Form starts  -->
+            <div class="formSection bg-white px-10 py-8 rounded shadow-md mb-4">
+                <h3 class="text-2xl font-bold mb-4">Edit Equipment Form</h3>
+                <form class="grid grid-cols-2 gap-4">
+                    <!-- Col 1 -->
+                    <div class="grid gap-2">
+                        <!-- Name -->
+                        <input class="border w-full p-4 leading-tight bg-slate-100" name="name" type="text" placeholder="Name" required />
+                        <!-- Brand  -->
+                        <input class="border w-full p-4 leading-tight bg-slate-100" name="brand" type="text" placeholder="Brand" />
+                        <!-- Serial -->
+                        <input class="border w-full p-4 leading-tight bg-slate-100 disabled:cursor-not-allowed disabled:bg-slate-300" name="serial" type="text" placeholder="Serial" disabled />
+                    </div>
+                    <!-- Col 2 -->
+                    <div class="grid gap-2">
+                        <!-- Price -->
+                        <input class="border w-full p-4 leading-tight bg-slate-100 disabled:cursor-not-allowed disabled:bg-slate-300" name="price" type="number" placeholder="Price" disabled />                 
+                        <!-- Equipment Type  -->
+                        <select name="eqType" class="border w-full p-4 leading-tight bg-slate-100">
+                          <option hidden>Equipment Type</option>
+                          <option value="general">General</option>
+                          <option value="premium">Premium</option>
+                        </select>      
+                    </div>
+                    <div>
+                        <button
+                          class="bg-blue-900 text-white font-bold py-2 px-4 w-full"
+                          type="submit">
+                          Update
+                        </button>
+                    </div>
+                    <div>
+                        <a class="bg-red-900 text-white font-bold py-2 px-4 w-full inline-block text-center cursor-pointer">
+                            Delete Equipment
+                        </a>
+                    </div>
+                </form>
+            </div>
+    </div>
+  </div>
+{% endblock body %}

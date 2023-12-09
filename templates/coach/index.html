@@ -1,0 +1,91 @@
+{% extends "../base.html" %}
+
+{% block body %}
+   <!-- component sections starts  -->
+   <div class="conponentSection p-5 sm:ml-64 bg-gray-200">
+    <div class="componentWrapper">
+        <!-- Entry Form starts  -->
+        <div class="formSection bg-white p-4 rounded shadow-md mb-4">
+            <h3 class="text-2xl font-bold mb-4">New Coach Form</h3>
+            <form class="grid grid-cols-3 gap-4">
+                <!-- Col 1 -->
+                <div class="grid gap-2">
+                    <!-- Name -->
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="name" type="text" placeholder="Name" required />
+                    <!-- DOB  -->
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="dob" type="date" required />
+                    <!-- NID -->
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="nid" type="text" placeholder="NID" required />
+                </div>
+                <!-- Col 2 -->
+                <div class="grid gap-2">
+                    <!-- Phone -->
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="phone" type="tel" placeholder="Phone" required />                 
+                    <!-- Reference -->
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="ref" type="text" placeholder="Refrence" />    
+                     <!-- Gender  -->
+                     <select name="gender" class="border w-full p-4 leading-tight bg-slate-100">
+                      <option hidden>Gender</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>                  
+                </div>
+                <!-- Col 3 -->
+                <div class="grid gap-2">      
+                    <!-- Salary -->
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="salary" type="number" placeholder="Salary" required />            
+                    <!-- Address -->
+                    <textarea class="border w-full p-4 leading-tight bg-slate-100" name="address" placeholder="Address" required ></textarea>
+                </div>
+                <!-- Schedule -->
+                <div class="col-span-3">
+                    <span class="font-semibold mb-1 inline-block">Select Schedule</span>
+                    <select name="schedule" multiple class="border w-full p-4 leading-tight bg-slate-100">
+                        <option value="apple">Apple</option>
+                        <option value="banana">Banana</option>
+                        <option value="orange">Orange</option>
+                        <option value="grape">Grape</option>
+                        <option value="mango">Mango</option>
+                      </select>
+                </div>
+                <div class="col-span-3">
+                    <button
+                      class="bg-blue-900 text-white font-bold py-2 px-4 w-full"
+                      type="submit">
+                      Add New Coach
+                    </button>
+                  </div>
+            </form>
+        </div>
+      <!-- List section starts  -->
+      <div class="bg-gray-50 p-4 shadow-xl rounded-md">
+        <div class="relative overflow-x-auto h-[28rem]">
+          <table class="w-full">
+            <thead
+              class="text-sm uppercase bg-blue-900 text-gray-50 text-center"
+            >
+              <tr>
+                <th scope="col" class="px-6 py-3">Coach ID</th>
+                <th scope="col" class="px-6 py-3">Name</th>
+                <th scope="col" class="px-6 py-3">phone</th>
+                <th scope="col" class="px-6 py-3">salary</th>
+                <th scope="col" class="px-6 py-3">Status</th>
+                <th scope="col" class="px-6 py-3">View</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="bg-white border text-sm text-center">
+                <td class="px-6 py-4">MID-101</td>
+                <td class="px-6 py-4">Marco</td>
+                <td class="px-6 py-4">123456</td>
+                <td class="px-6 py-4">Paid</td>
+                <td class="px-6 py-4">Active</td>
+                <td class="px-6 py-4"><a class="underline" href="/coach/edit/1">View</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock body %}

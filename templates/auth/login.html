@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <!-- tailwind cdn  -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+</head>
+
+<body>
+  <main>
+    <section>
+      <div class="sm:flex gap-2 min-h-screen">
+        <!-- Left Side -->
+        <div class="info w-full bg-blue-900 grid justify-center items-center py-8">
+          <div class="grid text-center gap-2 text-white">
+            <div class="w-40 h-40 mx-auto">
+              <img class="w-full h-full rounded-full"
+                src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=1045&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="">
+            </div>
+            <h2 class="text-4xl font-bold">Fitness Kingdom BD</h2>
+            <h4 class="text-xl">Gym Management System</h4>
+            <p class="text-sm">For emergency assistance: <a class="underline" href="tel:01766409973">01766409973</a></p>
+          </div>
+        </div>
+        <!-- Right Side -->
+        <div class="login w-full grid items-center">
+          <!-- Form -->
+          <form class="px-8 pt-6 pb-8 mb-4" method="post">
+            {% csrf_token %}
+            <div class="icon w-full text-center mb-4">
+              <i class='bx bx-user text-6xl text-blue-900'></i>
+              <h3 class="text-2xl font-bold">
+                Sign In
+              </h3>
+            </div>
+            <div class="mb-4">
+              <input
+                class="border w-full p-4 leading-tight bg-slate-100"
+                name="username" type="text" placeholder="Username" required />
+            </div>
+            <div class="mb-6">
+              <input
+                class="border w-full p-4 leading-tight bg-slate-100"
+                name="password" type="password" placeholder="Password" required />
+            </div>
+            <div class="w-full">
+              <button
+                class="bg-blue-900 text-white font-bold py-2 px-4 w-full"
+                type="submit">
+                Sign In
+              </button>
+            </div>
+          </form>
+        </div>
+    </section>
+  </main>
+</body>
+
+</html>

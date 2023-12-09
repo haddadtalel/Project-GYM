@@ -14,6 +14,7 @@ class Member(models.Model):
     phone = models.CharField(_("Phone"),unique=True,max_length=11,blank=True,null=True)
     dob = models.DateField(_("Date of Birth"),null=True,blank=True)
     
+    ref = models.CharField(_("Reference"),unique=True,max_length=50,blank=True,null=True)
     address = models.TextField(_("Address"),null=True,blank=True)
     gender = models.CharField(_("Gender"),max_length=50, null=True,blank=True,choices=GENDER_CHOICES)
 

@@ -14,6 +14,7 @@ class Coach(models.Model):
     phone = models.CharField(_("Phone"),unique=True,max_length=11,blank=True,null=True)
     dob = models.DateField(_("Date of Birth"),null=True,blank=True)
     
+    ref = models.CharField(_("Reference"),max_length=50,null=True,blank=True)
     salary = models.FloatField(_("Salary"),blank=True,null=True)
     gender = models.CharField(_("Gender"),max_length=50, null=True,blank=True,choices=GENDER_CHOICES)
 

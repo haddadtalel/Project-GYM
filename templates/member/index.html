@@ -1,0 +1,212 @@
+{% extends "../base.html" %}
+
+{% block body %}
+   <!-- component sections starts  -->
+   <div class="conponentSection p-5 sm:ml-64 bg-gray-200">
+    <div class="componentWrapper h-full rounded flex flex-col">
+      <!-- leftFormSection starts  -->
+      <div
+        class="leftFormSection bg-white px-10 py-8 grid grid-cols-3 gap-x-3 gap-y-4 rounded-md shadow-lg mb-4"
+      >
+        <!-- input group 1 starts  -->
+        <div class="inpGroup1 flex flex-col items-center">
+          <!-- member id  -->
+          <div class="memberId flex justify-between mb-4">
+            <label for="mid" class="pr-1 text-lg">Member ID : </label>
+            <input
+              type="text"
+              id="mid"
+              class="outline-none text-xs p-2 rounded bg-gray-100 border border-gray-300"
+            />
+          </div>
+
+          <!-- member id  -->
+
+          <!-- member name  -->
+
+          <div class="nameInput flex justify-between mb-4">
+            <label for="name" class="pr-1 text-lg">Name : </label>
+            <input
+              type="text"
+              id="name"
+              class="outline-none text-xs p-2 rounded bg-gray-100 border border-gray-300"
+            />
+          </div>
+
+          <!-- member name  -->
+
+          <!-- member address  -->
+          <div class="nameInput flex justify-between mb-4">
+            <label for="address" class="pr-1 text-lg">Address : </label>
+            <textarea
+              id="address"
+              rows="3"
+              class="outline-none text-xs p-2 rounded bg-gray-100 border border-gray-300"
+            ></textarea>
+          </div>
+          <!-- member address  -->
+        </div>
+        <!-- input group 1 ends  -->
+
+        <!-- input group 2 starts  -->
+
+        <div class="inpGroup2 flex flex-col items-center">
+          <!-- phone number input  -->
+
+          <div class="amount flex justify-between mb-4">
+            <label for="phone" class="pr-1 text-lg">Phone : </label>
+            <input
+              type="number"
+              id="phone"
+              class="outline-none text-xs p-2 rounded bg-gray-100 border border-gray-300"
+            />
+          </div>
+
+          <!-- phone number input  -->
+
+          <!-- gender input  -->
+          <div class="nameInput flex justify-between mb-4">
+            <label for="gender" class="pr-1 text-lg">Gender : </label>
+
+            <select id="gender" className=" border border-red-500 ">
+              <option class="  " value="">Choose gender</option>
+              <option class="  " value="male">Male</option>
+              <option class="  " value="female">Female</option>
+            </select>
+          </div>
+          <!-- gender input  -->
+
+          <!-- schedule input  -->
+
+          <div class="scheduleInput flex justify-between mb-4">
+            <label for="gender" class="pr-1 text-lg">schedule : </label>
+
+            <select id="gender" className=" border border-red-500 ">
+              <option class="  " value="">Choose schedule</option>
+              <option class="  " value="schedule1">11:00</option>
+              <option class="  " value="schedule2">2:00</option>
+            </select>
+          </div>
+
+          <!-- schedule input  -->
+        </div>
+
+        <!-- input group 2 ends  -->
+
+        <!-- input group 3 starts  -->
+        <div class="inpgroup3 flex flex-col items-center">
+          <!-- start date  -->
+          <div class="start date flex justify-between mb-4">
+            <label for="date" class="pr-1 text-lg">start date : </label>
+            <input
+              type="date"
+              id="date"
+              class="outline-none text-xs p-2 rounded bg-gray-100 border border-gray-300"
+            />
+          </div>
+          <!-- start date  -->
+
+          <!-- end date  -->
+          <div class="start date flex justify-between mb-4">
+            <label for="date" class="pr-1 text-lg">End date : </label>
+            <input
+              type="date"
+              id="date"
+              class="outline-none text-xs p-2 rounded bg-gray-100 border border-gray-300"
+            />
+          </div>
+          <!-- end date  -->
+
+          <!-- status input  -->
+          <div class="nameInput flex justify-between mb-4">
+            <label for="gender" class="pr-1 text-lg">Status : </label>
+
+            <select
+              id="gender"
+              className="bg-gray-500 text-gray-900 rounded-lg  block w-full p-2.5 border-none outline-none "
+            >
+              <option class="  " value="">Choose status</option>
+              <option class="  " value="status">status1</option>
+              <option class="  " value="status">status1</option>
+            </select>
+          </div>
+          <!-- status input  -->
+        </div>
+        <!-- input group 3 ends -->
+
+        <!-- button sections  -->
+        <div class="btnGroup col-span-3 flex justify-end gap-x-6">
+          <button class="py-2 px-5 text-gray-50 bg-violet-800 rounded">
+            Add
+          </button>
+          <!--  -->
+          <!--  -->
+          <button class="py-2 px-5 text-gray-50 bg-violet-800 rounded">
+            Clear
+          </button>
+          <!--  -->
+          <button class="py-2 px-5 text-gray-50 bg-violet-800 rounded">
+            Update
+          </button>
+
+          <!--  -->
+          <button class="py-2 px-5 text-gray-50 bg-violet-800 rounded">
+            Delete
+          </button>
+          <!--  -->
+        </div>
+        <!-- button sections  -->
+
+        <!--  -->
+      </div>
+      <!-- leftFormSection ends  -->
+
+      <!-- right table section starts  -->
+      <div class="rightTableSection bg-gray-50 p-4 shadow-xl rounded-md">
+        <div class="relative overflow-x-auto rounded-t-md h-[28rem]">
+          <table class="w-full">
+            <thead
+              class="text-sm uppercase bg-violet-700 text-gray-50 text-center"
+            >
+              <tr>
+                <th scope="col" class="px-6 py-3">member ID</th>
+                <th scope="col" class="px-6 py-3">Name</th>
+                <th scope="col" class="px-6 py-3">address</th>
+                <th scope="col" class="px-6 py-3">phone</th>
+                <th scope="col" class="px-6 py-3">gender</th>
+                <th scope="col" class="px-6 py-3">schedule</th>
+                <th scope="col" class="px-6 py-3">start date</th>
+                <th scope="col" class="px-6 py-3">end date</th>
+                <th scope="col" class="px-6 py-3">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="bg-white border text-sm text-center">
+                <td class="px-6 py-4">MID-101</td>
+                <td class="px-6 py-4">Marco</td>
+                <td class="px-6 py-4">test address</td>
+                <td class="px-6 py-4">123456</td>
+                <td class="px-6 py-4">gender</td>
+                <td class="px-6 py-4">11am-1pm</td>
+                <td class="px-6 py-4">2023-1-5</td>
+                <td class="px-6 py-4">2023-12-6</td>
+                <td class="px-6 py-4">paid</td>
+              </tr>
+
+              <!--  -->
+              <!--  -->
+              <!--  -->
+              <!--  -->
+              <!--  -->
+              <!--  -->
+              <!--  -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- right table section ends -->
+    </div>
+  </div>
+
+  <!-- component section ends -->
+{% endblock body %}

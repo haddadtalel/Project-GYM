@@ -1,0 +1,115 @@
+<!-- dashboard section starts  -->
+<div
+  class="dashboardContainer fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+  aria-label="Sidebar"
+>
+  <div class="h-full px-3 py-4 overflow-y-auto bg-blue-900 relative">
+    <!-- dashboard top section  -->
+    <div
+      class="dashBoardTop mb-8 flex flex-col justify-center items-center text-gray-50 border-b-2 border-gray-200 pb-3"
+    >
+      <div class="iconSection pb-1">
+        <img src="/images/icons/admin2.png" class="text-white" alt="" />
+      </div>
+
+      <div class="bottomText text-xl text-center leading-[1.5rem]">
+        <h1>Welcome,</h1>
+        <h1 class="font-semibold">{{request.user.username}}</h1>
+      </div>
+    </div>
+    <!-- dashboard top section  -->
+
+    <!-- dashboard lists  -->
+    <div class="dashBoardLinks">
+      <ul class="space-y-2 font-medium">
+        <li>
+          {% if request.user.is_manager %}
+            <a
+            href="{% url "managerDashboard" %}"
+            class="border border-gray-50 flex justify-center items-center p-2 text-gray-100 rounded hover:bg-gray-100 hover:text-gray-900"
+            >
+            <p class="ms-3">Dashboard</p>
+          </a>
+          {% else %}
+          <a
+          href="#"
+          class="border border-gray-50 flex justify-center items-center p-2 text-gray-100 rounded hover:bg-gray-100 hover:text-gray-900"
+          >
+          <p class="ms-3">Dashboard</p>
+        </a>
+          {% endif %}
+        </li>
+        <li>
+          <a
+            href="{% url "user:index" %}"
+            class="border border-gray-50 flex justify-center items-center p-2 text-gray-100 rounded hover:bg-gray-100 hover:text-gray-900"
+          >
+            <p class="ms-3">Employee</p>
+          </a>
+        </li>
+        <!--  -->
+        <li>
+          <a
+            href="{% url "coach:index" %}"
+            class="border border-gray-50 flex justify-center items-center p-2 text-gray-100 rounded hover:bg-gray-100 hover:text-gray-900"
+          >
+            <p class="ms-3">Coaches</p>
+          </a>
+        </li>
+        <!--  -->
+        <li>
+          <a
+            href="{% url "equipment:index" %}"
+            class="border border-gray-50 flex justify-center items-center p-2 text-gray-100 rounded hover:bg-gray-100 hover:text-gray-900"
+          >
+            <p class="ms-3">Equipment</p>
+          </a>
+        </li>
+        <!--  -->
+        <li>
+          <a
+            href="{% url "member:index" %}"
+            class="border border-gray-50 flex justify-center items-center p-2 text-gray-100 rounded hover:bg-gray-100 hover:text-gray-900"
+          >
+            <p class="ms-3">Members</p>
+          </a>
+        </li>
+        <!--  -->
+        <li>
+          <a
+            href="{% url "transaction:index" %}"
+            class="border border-gray-50 flex justify-center items-center p-2 text-gray-100 rounded hover:bg-gray-100 hover:text-gray-900"
+          >
+            <p class="ms-3">Payment</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- dashboard lists ends   -->
+
+    <!-- logout  button starts  -->
+    <div class="logoutSection absolute bottom-3 left-3">
+      <div
+        class="logOutWrapper flex justify-between items-center cursor-pointer"
+      >
+        <a href="{% url "logout" %}" class="flex items-center justify-center logoutIcon bg-violet-400 w-10 h-10 rounded-full shadow-lg">
+          <i class='bx bx-log-out text-2xl text-white'></i>
+        </a>
+        <p class="text-lg pl-2 font-semibold text-gray-50">Logout</p>
+      </div>
+    </div>
+    <!-- logout  button ends  -->
+  </div>
+</div>
+
+<!-- hamburger menu icon starts  -->
+<div
+  class="fixed bottom-[20px] h-[50px] right-[20px] sm:hidden flex flex-col justify-center gap-2 bg-gray-500 p-2 rounded cursor-pointer z-[20]"
+>
+  <div class="line duration-300 h-[5px] w-[40px] bg-white rounded"></div>
+  <div class="line duration-300 h-[5px] w-[40px] bg-white rounded"></div>
+  <div class="line duration-300 h-[5px] w-[40px] bg-white rounded"></div>
+</div>
+<!-- hamburger menu icon ends  -->
+<!-- dashboard section ends  -->
