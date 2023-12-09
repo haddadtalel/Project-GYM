@@ -1,0 +1,87 @@
+{% extends "../base.html" %}
+
+{% block body %}
+<!-- component sections starts  -->
+<div class="conponentSection p-5 sm:ml-64 bg-gray-200">
+  <div class="componentWrapper">
+    <!-- Entry Form starts  -->
+    <div class="formSection bg-white p-4 rounded shadow-md mb-4">
+      <h3 class="text-2xl font-bold mb-4">New Package Form</h3>
+      <form class="grid grid-cols-3 gap-4">
+        <!-- Col 1 -->
+        <div class="grid gap-2">
+          <!-- Name -->
+          <input class="border w-full p-4 leading-tight bg-slate-100" name="name" type="text" placeholder="Name"
+            required />
+          <!-- Price -->
+          <input class="border w-full p-4 leading-tight bg-slate-100" name="price" type="number" placeholder="Price"
+            required />
+        </div>
+        <!-- Col 2 -->
+        <div class="grid gap-2">
+          <!-- Payment Frequency  -->
+          <select name="paymentFreq" class="border w-full p-4 leading-tight bg-slate-100">
+            <option hidden>Payment Frequency</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <!-- Col 3 -->
+        <div class="grid gap-2">
+          <!-- Address -->
+          <textarea class="border w-full p-4 leading-tight bg-slate-100" name="desc" placeholder="Description"
+            required></textarea>
+        </div>
+        <!-- Schedule -->
+        <div class="col-span-2">
+          <span class="font-semibold mb-1 inline-block">Select Schedule</span>
+          <select name="schedule" multiple class="border w-full p-4 leading-tight bg-slate-100">
+            <option value="apple">Apple</option>
+            <option value="banana">Banana</option>
+            <option value="orange">Orange</option>
+            <option value="grape">Grape</option>
+            <option value="mango">Mango</option>
+          </select>
+        </div>
+        <!-- Equipment Type  -->
+        <div>
+          <span class="font-semibold mb-1 inline-block">Select Equipment Types</span>
+          <select name="eqType" class="border w-full p-4 leading-tight bg-slate-100" multiple>
+            <option hidden>Equipment Type</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <div class="col-span-3">
+          <button class="bg-blue-900 text-white font-bold py-2 px-4 w-full" type="submit">
+            Add New Package
+          </button>
+        </div>
+      </form>
+    </div>
+    <!-- List section starts  -->
+    <div class="bg-gray-50 p-4 shadow-xl rounded-md">
+      <div class="relative overflow-x-auto">
+        <table class="w-full">
+          <thead class="text-sm uppercase bg-blue-900 text-gray-50 text-center">
+            <tr>
+              <th scope="col" class="px-6 py-3">Package Name</th>
+              <th scope="col" class="px-6 py-3">Price</th>
+              <th scope="col" class="px-6 py-3">Payment Frequency</th>
+              <th scope="col" class="px-6 py-3">View</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-white border text-sm text-center">
+              <td class="px-6 py-4">MID-101</td>
+              <td class="px-6 py-4">Marco</td>
+              <td class="px-6 py-4">Active</td>
+              <td class="px-6 py-4"><a class="underline" href="/package/edit/1">View</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock body %}

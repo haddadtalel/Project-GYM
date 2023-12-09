@@ -4,5 +4,6 @@ from . import views
 app_name = "package"
 
 urlpatterns = [
-    # path('', views.index , name='index'),
+    path('', views.index , name='index'),
+    path('edit/<int:pk>', views.edit , name='edit'),
 ]
