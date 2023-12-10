@@ -6,7 +6,8 @@
        <!-- Entry Form starts  -->
         <div class="formSection bg-white p-4 rounded shadow-md mb-4">
           <h3 class="text-2xl font-bold mb-4">Payroll</h3>
-          <form>
+          <form method="post">
+            {% csrf_token %}
               <div class="grid grid-cols-2 gap-4">
                 <input class="border w-full p-4 leading-tight bg-slate-100" name="searchEmp" type="text" placeholder="Search For Employee" />
                 <input class="border w-full p-4 leading-tight bg-slate-100" name="searchCoach" type="text" placeholder="Search For Coach" />
@@ -36,11 +37,13 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="bg-white border text-sm text-center">
-                  <td class="px-6 py-4">MID-101</td>
-                  <td class="px-6 py-4">Marco</td>
-                  <td class="px-6 py-4"><a class="underline" href="/user/edit/1">2000</a></td>
-                </tr>
+                {% for emp in employees  %}
+                  <tr class="bg-white border text-sm text-center">
+                    <td class="px-6 py-4">{{emp.emp_id}}</td>
+                    <td class="px-6 py-4">{{emp.name}}</td>
+                    <td class="px-6 py-4"><a class="underline" href="{% url "transaction:payE" emp.id %}">{{emp.due}}</a></td>
+                  </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
@@ -57,11 +60,13 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="bg-white border text-sm text-center">
-                  <td class="px-6 py-4">MID-101</td>
-                  <td class="px-6 py-4">Marco</td>
-                  <td class="px-6 py-4"><a class="underline" href="/user/edit/1">5000</a></td>
-                </tr>
+                {% for coach in coaches %}
+                  <tr class="bg-white border text-sm text-center">
+                    <td class="px-6 py-4">{{coach.coachId}}</td>
+                    <td class="px-6 py-4">{{coach.name}}</td>
+                    <td class="px-6 py-4"><a class="underline" href="{% url "transaction:payC" coach.id %}">{{coach.due}}</a></td>
+                  </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
@@ -77,17 +82,25 @@
                 class="text-sm uppercase bg-blue-900 text-gray-50 text-center"
               >
                 <tr>
-                  <th scope="col" class="px-6 py-3">EMP ID</th>
-                  <th scope="col" class="px-6 py-3">Name</th>
-                  <th scope="col" class="px-6 py-3">Due</th>
+                  <th scope="col" class="px-6 py-3">TRX</th>
+                  <th scope="col" class="px-6 py-3">Reason</th>
+                  <th scope="col" class="px-6 py-3">Amount</th>
+                  <th scope="col" class="px-6 py-3">Date</th>
+                  <th scope="col" class="px-6 py-3">Payed By</th>
+                  <th scope="col" class="px-6 py-3">Received By</th>
                 </tr>
               </thead>
               <tbody>
-                <tr class="bg-white border text-sm text-center">
-                  <td class="px-6 py-4">MID-101</td>
-                  <td class="px-6 py-4">Marco</td>
-                  <td class="px-6 py-4"><a class="underline" href="/user/edit/1">2000</a></td>
-                </tr>
+                {% for debit in debits %}
+                  <tr class="bg-white border text-sm text-center">
+                    <td class="px-6 py-4">{{debit.trxId}}</td>
+                    <td class="px-6 py-4">{{debit.reason}}</td>
+                    <td class="px-6 py-4">{{debit.amount}}</td>
+                    <td class="px-6 py-4">{{debit.date}}</td>
+                    <td class="px-6 py-4">{{debit.payed_by.name}} - {{debit.payed_by.memberId}}</td>
+                    <td class="px-6 py-4">{{debit.received_by.name}} - {{debit.received_by.emp_id}}</td>
+                  </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>       
@@ -103,17 +116,40 @@
                 class="text-sm uppercase bg-blue-900 text-gray-50 text-center"
               >
                 <tr>
-                  <th scope="col" class="px-6 py-3">EMP ID</th>
+                  <th scope="col" class="px-6 py-3">TRX</th>
+                  <th scope="col" class="px-6 py-3">Reason</th>
+                  <th scope="col" class="px-6 py-3">Amount</th>
+                  <th scope="col" class="px-6 py-3">Date</th>
+                  <th scope="col" class="px-6 py-3">Employee/Coach</th>
                   <th scope="col" class="px-6 py-3">Name</th>
-                  <th scope="col" class="px-6 py-3">Due</th>
                 </tr>
               </thead>
               <tbody>
-                <tr class="bg-white border text-sm text-center">
-                  <td class="px-6 py-4">MID-101</td>
-                  <td class="px-6 py-4">Marco</td>
-                  <td class="px-6 py-4"><a class="underline" href="/user/edit/1">2000</a></td>
-                </tr>
+                {% for credit in credits %}
+                  <tr class="bg-white border text-sm text-center">
+                    <td class="px-6 py-4">{{credit.trxId}}</td>
+                    <td class="px-6 py-4">{{credit.reason}}</td>
+                    <td class="px-6 py-4">{{credit.amount}}</td>
+                    <td class="px-6 py-4">{{credit.date}}</td>
+                    <td class="px-6 py-4">
+                      {% if credit.is_employee %}
+                        Employee
+                       {% elif credit.is_coach %}
+                        Coach
+                        {% else %}
+                        Equipment
+                      {% endif %}</td>
+                    <td class="px-6 py-4">
+                      {% if credit.is_employee %}
+                        {{credit.employee.name}} - {{credit.employee.emp_id}}
+                      {% elif credit.is_coach %}
+                      {{credit.coach.name}} - {{credit.coach.coachId}}
+                     {% else %}
+                      {{credit.equipment.name}} - {{credit.equipment.serial}}
+                    {% endif %}</td>
+                    </td>
+                  </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>       

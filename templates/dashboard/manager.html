@@ -7,7 +7,12 @@
         <!-- Quick View  -->
         <div
         class="bg-gray-50 w-full p-4 shadow-xl rounded-md">
-            <div class="grid grid-cols-3 gap-4">
+            <div class="grid grid-cols-4 gap-4">
+                <div class="card bg-blue-900 rounded p-4 text-center text-white grid gap-2">
+                    <i class="fa-solid fa-coins text-4xl"></i>
+                    <h4 class="text-2xl">Funds</h4>
+                    <p>{{funds}} Taka</p>
+                </div>
                 <div class="card bg-blue-900 rounded p-4 text-center text-white grid gap-2">
                     <i class="fa-solid fa-dumbbell text-4xl"></i>
                     <h4 class="text-2xl">Coaches</h4>
@@ -47,7 +52,7 @@
                   {% for employee in employees %}
                     <li class="flex justify-between">
                       <span>{{employee.name}}</span>
-                      <span>{{employees.due}}</span>
+                      <span>{{employee.due}}</span>
                     </li>
                   {% endfor %}
                 </ul>

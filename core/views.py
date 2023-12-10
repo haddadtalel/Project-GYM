@@ -85,7 +85,7 @@ def managerDashboard(request):
     coaches = Coach.objects.filter(due__gt = 0)
     employees = User.objects.filter(due__gt = 0,is_employee = True)
     members = Member.objects.all().order_by("-id")
-
+    funds = MetaData.objects.last().funds
 
     # Get the current month and year
     current_month = datetime.now().month
@@ -94,16 +94,30 @@ def managerDashboard(request):
     # Query the income data for the current month
     income_data = Debit.objects.filter(date__month=current_month, date__year=current_year).values('date').annotate(total_amount=Sum('amount')).order_by('date')
 
-    # Query the income data for the current month
+    vals_d = {}
 
-    # Prepare the data for the chart
-    labels_d = [entry['date'].strftime('%d') for entry in income_data]
-    data_d = [entry['total_amount'] for entry in income_data]
+    for entry in income_data:
+        if entry['date'].strftime('%d') in vals_d:
+            vals_d[entry['date'].strftime('%d')] += int(entry['total_amount'])
+        else:
+            vals_d[entry['date'].strftime('%d')] = int(entry['total_amount'])
+
+    labels_d = list(vals_d.keys())
+    data_d = list(vals_d.values())
 
     expense_data = Credit.objects.filter(date__month=current_month, date__year=current_year).values('date').annotate(total_amount=Sum('amount')).order_by('date')
 
-    labels_c = [entry['date'].strftime('%d') for entry in expense_data]
-    data_c = [entry['total_amount'] for entry in expense_data]
+    vals_c = {}
+
+    for entry in expense_data:
+        if entry['date'].strftime('%d') in vals_c:
+            vals_c[entry['date'].strftime('%d')] += int(entry['total_amount'])
+        else:
+            vals_c[entry['date'].strftime('%d')] = int(entry['total_amount'])
+
+    labels_c = list(vals_c.keys())
+    data_c = list(vals_c.values())
+
 
     context = {
         'coaches':coaches,
@@ -116,7 +130,8 @@ def managerDashboard(request):
         'data_d': data_d,
         'labels_c': labels_c,
         'data_c': data_c,
-        'current_month_name':current_month_name
+        'current_month_name':current_month_name,
+        'funds':funds
     }
     return render(request, "dashboard/manager.html",context)
 

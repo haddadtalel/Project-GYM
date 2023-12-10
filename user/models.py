@@ -40,6 +40,7 @@ class User(AbstractUser):
 
 class MetaData(models.Model):
     lastChecked = models.DateField(_("Last Checked"),null=True,blank=True)
+    funds = models.FloatField(_("Funds"),null=True,blank=True,default=0)
     
     def __str__(self) :
         return f'{self.lastChecked}'

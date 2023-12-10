@@ -1,0 +1,29 @@
+{% extends "../base.html" %}
+
+{% block body %}
+<div class="conponentSection p-5 sm:ml-64 bg-gray-200">
+    <div class="componentWrapper">
+       <!-- Entry Form starts  -->
+        <div class="formSection bg-white p-4 rounded shadow-md mb-4">
+          <h3 class="text-2xl font-bold mb-4">Coach Payroll</h3>
+          <form method="post">
+            {% csrf_token %}
+                <h4 class="text-lg mb-4">Name: {{coach.name}} | Phone: {{coach.phone}}</h4>
+              <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <input class="border w-full p-4 leading-tight bg-slate-100 disabled:bg-slate-300 disabled:cursor-not-allowed" name="id" type="text" value="{{coach.coachId}}" disabled />
+                <input class="border w-full p-4 leading-tight bg-slate-100 disabled:bg-slate-300 disabled:cursor-not-allowed" name="due" type="text" disabled value={{coach.due}} />
+                <input class="border w-full p-4 leading-tight bg-slate-100" name="amount" type="text" placeholder="Enter Amount" />
+                <div class="col-span-3">
+                  <button
+                    class="bg-blue-900 text-white font-bold py-2 px-4 w-full"
+                    type="submit">
+                   Pay
+                  </button>
+                </div>
+              </div>
+          </form>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

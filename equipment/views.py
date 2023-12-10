@@ -1,13 +1,16 @@
 from django.shortcuts import render,redirect
+from datetime import datetime
 
 from .models import Equipment,EquipmentType,EquipmentActivityTrack
-from datetime import datetime
+from user.models import MetaData
+from transaction.models import Credit
 # Create your views here.
 def index(request):
     eqs = Equipment.objects.all()
     eqTypes = EquipmentType.objects.all()
     eqActivities = EquipmentActivityTrack.objects.all()
 
+    meta = MetaData.objects.last()
     if request.method == "POST":
         name = request.POST.get("name")
         brand = request.POST.get("brand")
@@ -17,11 +20,6 @@ def index(request):
 
         eqTypes_res = request.POST.getlist("eqType")
 
-        print(costCondition)
-        print(eqTypes_res)
-
-        if costCondition == "store":
-            pass
 
         eq = Equipment.objects.create(
             name = name,
@@ -32,6 +30,19 @@ def index(request):
         )
         for eqT in eqTypes_res:
             eq.equipmentType.add(eqT)
+        
+        timestamp = int(datetime.now().timestamp())
+        if costCondition == "store":
+            Credit.objects.create(
+                trxId = 'FK-TRX-' + str(timestamp),
+                reason = 'buy_equipment',
+                amount = int(price),
+                date = datetime.now(),
+                is_equipment = True,
+                equipment = eq
+            )
+            meta.funds -= int(price)
+            meta.save()
         
     context = {
         'eqs':eqs,
