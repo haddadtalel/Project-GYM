@@ -11,7 +11,7 @@ GENDER_CHOICES = [
 class Member(models.Model):
     memberId = models.CharField(_("Member Id"),max_length=20,null=True,blank=True)
     name = models.CharField(_("Full Name"),max_length=50,null=True,blank=True)
-    phone = models.CharField(_("Phone"),unique=True,max_length=11,blank=True,null=True)
+    phone = models.CharField(_("Phone"),unique=True,max_length=15,blank=True,null=True)
     dob = models.DateField(_("Date of Birth"),null=True,blank=True)
     
     nid = models.CharField(_("NID"),max_length=20,null=True,blank=True)

@@ -51,21 +51,21 @@ def initialize(request):
         # Member
         members = Member.objects.all()
         for member in members:
-            bill = 0
-            if member.package.frequency == "monthly":
+            if member.package.frequency == "monthly" and member.status == True:
                 bill = member.package.price
-            member.due_payment += bill
-            member.save()
+                member.due_payment += bill
+                member.save()
         # Coach
         coaches = Coach.objects.all()
         for coach in coaches:
-            salary = coach.salary
-            coach.due += salary
-            coach.save()
+            if coach.status == True:
+                salary = coach.salary
+                coach.due += salary
+                coach.save()
         # Employee
         employees = User.objects.all()
         for employee in employees:
-            if employee.is_employee:
+            if employee.is_employee and employee.status == True:
                 salary = employee.salary
                 employee.due += salary
                 employee.save()
@@ -137,9 +137,16 @@ def managerDashboard(request):
 
 @login_required
 def employeeDashboard(request):
+    initialize(request)
     if request.user.is_manager:
         return redirect('/managerDashboard/')
-    return render(request, "dashboard/employee.html")
+    
+    user = request.user
+
+    context = {
+        'user':user
+    }
+    return render(request, "dashboard/employee.html",context)
 
 def coachDashboard(request):
     return render(request,"dashboard/coach.html")

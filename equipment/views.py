@@ -88,6 +88,7 @@ def deactivate(request,pk):
 def active(request,pk):
     eq = Equipment.objects.get(id = pk)
     eq.is_available = True
+    eq.maintenanceDate = datetime.now()
     eq.save()
     return redirect("/equipment/")
 

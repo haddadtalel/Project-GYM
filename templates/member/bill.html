@@ -6,13 +6,19 @@
         <!-- Entry Form starts  -->
         <div class="formSection bg-white p-4 rounded shadow-md mb-4">
             <h3 class="text-2xl font-bold mb-4">Search</h3>
-            <form>
-                <div class="grid grid-cols-2 gap-4">
-                    <input class="border w-full p-4 leading-tight bg-slate-100" name="searchCoach" type="text"
+            <form method="post">
+                {% csrf_token %}
+                <div class="grid gap-4">
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="search" type="text"
                         placeholder="Search For Member" />
+                    <div>
+                        <button class="bg-blue-900 text-white font-bold py-2 px-4 w-full" type="submit">
+                            Search
+                        </button>
+                    </div>
                 </div>
             </form>
-        </div>     
+        </div>
         <div class="bg-gray-50 p-4 shadow-xl rounded-md mt-4">
             <h3 class="text-2xl font-semibold mb-4">Member List</h3>
             <div>
@@ -25,43 +31,48 @@
                                 <th scope="col" class="px-6 py-3">Phone</th>
                                 <th scope="col" class="px-6 py-3">Package</th>
                                 <th scope="col" class="px-6 py-3">Due</th>
+                                <th scope="col" class="px-6 py-3">Status</th>
                             </tr>
                         </thead>
                         <tbody>
+                            {% for member in members %}
                             <tr class="bg-white border text-sm text-center">
-                                <td class="px-6 py-4">MID-101</td>
-                                <td class="px-6 py-4">Marco</td>
-                                <td class="px-6 py-4">Good Condition</td>
-                                <td class="px-6 py-4">Good Condition</td>
-                                <td class="px-6 py-4">Good Condition</td>
+                                <td class="px-6 py-4">{{member.memberId}}</td>
+                                <td class="px-6 py-4">{{member.name}}</td>
+                                <td class="px-6 py-4">{{member.phone}}</td>
+                                <td class="px-6 py-4">{{member.package.name}}</td>
+                                <td class="px-6 py-4">{{member.due_payment}}</td>
+                                <td class="px-6 py-4">{{member.status}}</td>
                             </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
-        </div>  
+        </div>
         <div class="bg-gray-50 p-4 shadow-xl rounded-md mt-4">
+            {% for message in messages %}
             <div class="py-4 text-red-600 font-bold">
-                Wrong Member Id
+                {{message}}
             </div>
+            {% endfor %}
             <h3 class="text-2xl font-semibold mb-4">Pay Package Bill</h3>
-            <form class="grid grid-cols-2 gap-4">
+            <form class="grid grid-cols-2 gap-4" method="post" action="/member/pay/">
+                {% csrf_token %}
                 <!-- Member Id -->
-                <input class="border w-full p-4 leading-tight bg-slate-100" name="serial" type="text"
-                placeholder="Member Id" />
+                <input class="border w-full p-4 leading-tight bg-slate-100" name="memberId" type="text"
+                    placeholder="Member Id" required />
                 <!-- Amount -->
-                <input class="border w-full p-4 leading-tight bg-slate-100" name="memId" type="text"
-                placeholder="Member Id" />
+                <input class="border w-full p-4 leading-tight bg-slate-100" name="amount" type="number"
+                    placeholder="Amount" required />
                 <div class="col-span-2">
-                    <button
-                      class="bg-blue-900 text-white font-bold py-2 px-4 w-full"
-                      type="submit">
-                      Pay
+                    <button class="bg-blue-900 text-white font-bold py-2 px-4 w-full" type="submit">
+                        Pay
                     </button>
-                  </div>
-            </div>
+                </div>
         </div>
     </div>
+</div>
 </div>
 
 {% endblock body %}

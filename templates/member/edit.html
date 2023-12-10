@@ -8,39 +8,39 @@
         <div class="formSection bg-white p-4 rounded shadow-md mb-4">
             <div class="flex justify-between">
                 <h3 class="text-2xl font-bold mb-4">Edit Member Form</h3>
-                <span>Bill Pay Left: Taka</span>
+                <span>Bill Pay Left: {{member.due_payment}} Taka</span>
             </div>
-            <form class="grid grid-cols-3 gap-4">
+            <form class="grid grid-cols-3 gap-4" method="post">
+                {% csrf_token %}
                 <!-- Col 1 -->
                 <div class="grid gap-2">
                     <!-- Member Id -->
-                    <input class="border w-full p-4 leading-tight bg-slate-100 disabled:cursor-not-allowed disabled:bg-slate-300" name="memId" type="text" placeholder="Member Id" disabled />
+                    <input class="border w-full p-4 leading-tight bg-slate-100 disabled:cursor-not-allowed disabled:bg-slate-300" name="memId" type="text" placeholder="Member Id" disabled value="{{member.memberId}}" />
                     <!-- Name -->
-                    <input class="border w-full p-4 leading-tight bg-slate-100" name="name" type="text" placeholder="Name" required />
-                    <!-- DOB  -->
-                    <input class="border w-full p-4 leading-tight bg-slate-100" name="dob" type="date" required />
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="name" type="text" placeholder="Name" required value="{{member.name}}" />
                     <!-- NID -->
-                    <input class="border w-full p-4 leading-tight bg-slate-100" name="nid" type="text" placeholder="NID" required />
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="nid" type="text" placeholder="NID" required value="{{member.nid}}" />
                 </div>
                 <!-- Col 2 -->
                 <div class="grid gap-2">
                     <!-- Phone -->
-                    <input class="border w-full p-4 leading-tight bg-slate-100" name="phone" type="tel" placeholder="Phone" required />                 
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="phone" type="tel" placeholder="Phone" required value="{{member.phone}}" />                 
                     <!-- Reference -->
-                    <input class="border w-full p-4 leading-tight bg-slate-100" name="ref" type="text" placeholder="Refrence" />                     
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="ref" type="text" placeholder="Refrence" value="{{member.ref}}" />                     
                 </div>
                 <!-- Col 3 -->
                 <div class="grid gap-2">      
                      <!-- Package  -->
-                     <select name="gender" class="border w-full p-4 leading-tight bg-slate-100">
+                     <select name="package" class="border w-full p-4 leading-tight bg-slate-100">
                       <option hidden>Select a package</option>
-                      <option value="male">Basic</option>
-                      <option value="female">Premium</option>
+                      {% for package in packages %}
+                        <option {% if package.id == member.package.id %}selected{% endif %} value="{{package.id}}">{{package.name}}</option>
+                      {% endfor %}
                     </select>     
                     <!-- Address -->
-                    <textarea class="border w-full p-4 leading-tight bg-slate-100" name="address" placeholder="Address" required ></textarea>
+                    <textarea class="border w-full p-4 leading-tight bg-slate-100" name="address" placeholder="Address" required >{{member.address}}</textarea>
                 </div>
-                <div class="col-span-2">
+                <div>
                     <button
                       class="bg-blue-900 text-white font-bold py-2 px-4 w-full"
                       type="submit">
@@ -48,7 +48,18 @@
                     </button>
                 </div>
                 <div>
-                    <a class="bg-red-900 text-white font-bold py-2 px-4 w-full inline-block text-center cursor-pointer">
+                    {% if member.status %}
+                        <a href="{% url "member:deactivate"  member.id %}" class="bg-yellow-900 text-white font-bold py-2 px-4 w-full inline-block text-center cursor-pointer">
+                            Deactivate Member
+                        </a>
+                        {% else %}
+                        <a href="{% url "member:active"  member.id %}" class="bg-green-900 text-white font-bold py-2 px-4 w-full inline-block text-center cursor-pointer">
+                            Activate Member
+                        </a>
+                    {% endif %}
+                </div>
+                <div>
+                    <a href="{% url "member:delete" member.id %}" class="bg-red-900 text-white font-bold py-2 px-4 w-full inline-block text-center cursor-pointer">
                         Delete Member
                     </a>
                 </div>
