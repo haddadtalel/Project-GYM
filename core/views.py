@@ -51,7 +51,9 @@ def initialize(request):
         # Member
         members = Member.objects.all()
         for member in members:
-            bill = member.package.price
+            bill = 0
+            if member.package.frequency == "monthly":
+                bill = member.package.price
             member.due_payment += bill
             member.save()
         # Coach
