@@ -6,27 +6,28 @@
     <div class="componentWrapper">
         <!-- Entry Form starts  -->
         <div class="formSection bg-white p-4 rounded shadow-md mb-4">
-            <h3 class="text-2xl font-bold mb-4">New Schedule Form</h3>
-            <form class="grid grid-cols-2 gap-4">
+            <h3 class="text-2xl font-bold mb-4">Edit Schedule Form</h3>
+            <form class="grid grid-cols-2 gap-4" method="post">
+                {% csrf_token %}
                 <!-- Col 1 -->
                 <div class="grid gap-2">
                     <!-- Schedule Name  -->
                     <select name="name" class="border w-full p-4 leading-tight bg-slate-100" required>
-                        <option hidden>Schedule For</option>
-                        <option value="general">General</option>
-                        <option value="premium">Premium</option>
+                        {% for ch in TYPE_CHOICE %}
+                            <option {% if schedule.name == ch.0 %}selected{% endif %} value="{{ch.0}}">{{ch.1}}</option>
+                        {% endfor %}
                       </select>  
                     <!-- Day Name  -->
                     <select name="day" class="border w-full p-4 leading-tight bg-slate-100" required>
-                        <option hidden>Select Day</option>
-                        <option value="general">General</option>
-                        <option value="premium">Premium</option>
+                        {% for ch in DAY_CHOICES %}
+                            <option {% if schedule.day == ch.0 %}selected{% endif %} value="{{ch.0}}">{{ch.1}}</option>
+                        {% endfor %}
                       </select>  
                 </div>
                 <!-- Col 2 -->
                 <div class="grid gap-2">
                     <!-- Start Time -->
-                    <input class="border w-full p-4 leading-tight bg-slate-100" name="start_time" type="time" placeholder="Start Time" required />                 
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="start_time" type="time" placeholder="Start Time" required value="{{schedule.start_time}}" />                 
                    <!-- End Time -->
                    <input class="border w-full p-4 leading-tight bg-slate-100" name="end_time" type="time" placeholder="End Time" required />                 
                 </div>
@@ -38,7 +39,7 @@
                     </button>
                 </div>
                 <div>
-                    <a class="bg-red-900 text-white font-bold py-2 px-4 w-full inline-block text-center cursor-pointer">
+                    <a href="{% url "schedule:delete" schedule.id %}" class="bg-red-900 text-white font-bold py-2 px-4 w-full inline-block text-center cursor-pointer">
                         Delete Schedule
                     </a>
                 </div>

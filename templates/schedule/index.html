@@ -7,20 +7,23 @@
         <!-- Entry Form starts  -->
         <div class="formSection bg-white p-4 rounded shadow-md mb-4">
             <h3 class="text-2xl font-bold mb-4">New Schedule Form</h3>
-            <form class="grid grid-cols-2 gap-4">
+            <form class="grid grid-cols-2 gap-4" method="post">
+              {% csrf_token %}
                 <!-- Col 1 -->
                 <div class="grid gap-2">
                     <!-- Schedule Name  -->
                     <select name="name" class="border w-full p-4 leading-tight bg-slate-100" required>
                         <option hidden>Schedule For</option>
-                        <option value="general">General</option>
-                        <option value="premium">Premium</option>
+                        {% for ch in TYPE_CHOICE %}
+                          <option value="{{ch.0}}">{{ch.1}}</option>
+                        {% endfor %}                     
                       </select>  
                     <!-- Day Name  -->
                     <select name="day" class="border w-full p-4 leading-tight bg-slate-100" required>
                         <option hidden>Select Day</option>
-                        <option value="general">General</option>
-                        <option value="premium">Premium</option>
+                        {% for ch in DAY_CHOICES %}
+                          <option value="{{ch.0}}">{{ch.1}}</option>
+                        {% endfor %}                     
                       </select>  
                 </div>
                 <!-- Col 2 -->
@@ -55,13 +58,15 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="bg-white border text-sm text-center">
-                <td class="px-6 py-4">MID-101</td>
-                <td class="px-6 py-4">Marco</td>
-                <td class="px-6 py-4">Active</td>
-                <td class="px-6 py-4">Active</td>
-                <td class="px-6 py-4"><a class="underline" href="/schedule/edit/1">View</a></td>
-              </tr>
+              {% for schedule in schedules %}
+                <tr class="bg-white border text-sm text-center">
+                  <td class="px-6 py-4">{{schedule.name}}</td>
+                  <td class="px-6 py-4">{{schedule.day}}</td>
+                  <td class="px-6 py-4">{{schedule.start_time}}</td>
+                  <td class="px-6 py-4">{{schedule.end_time}}</td>
+                  <td class="px-6 py-4"><a class="underline" href="{% url "schedule:edit" schedule.id %}">View</a></td>
+                </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>
