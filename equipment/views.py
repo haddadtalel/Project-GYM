@@ -6,6 +6,7 @@ from datetime import datetime
 def index(request):
     eqs = Equipment.objects.all()
     eqTypes = EquipmentType.objects.all()
+    eqActivities = EquipmentActivityTrack.objects.all()
 
     if request.method == "POST":
         name = request.POST.get("name")
@@ -34,7 +35,8 @@ def index(request):
         
     context = {
         'eqs':eqs,
-        'eqTypes':eqTypes
+        'eqTypes':eqTypes,
+        'eqActivities':eqActivities
     }
     return render(request,'equipment/index.html',context)
 

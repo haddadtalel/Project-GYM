@@ -91,13 +91,15 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="bg-white border text-sm text-center">
-                  <td class="px-6 py-4">MID-101</td>
-                  <td class="px-6 py-4">Marco</td>
-                  <td class="px-6 py-4">Active</td>
-                  <td class="px-6 py-4">Active</td>
-                  <td class="px-6 py-4">Active</td>            
-                </tr>
+                {% for eq in eqActivities %}
+                  <tr class="bg-white border text-sm text-center">
+                    <td class="px-6 py-4">{{eq.equipment.serial}}</td>
+                    <td class="px-6 py-4">{{eq.equipment.name}}</td>
+                    <td class="px-6 py-4">{{eq.booked_by.name}}</td>
+                    <td class="px-6 py-4">{{eq.booked_for.name}}</td>
+                    <td class="px-6 py-4">{{eq.start_time}} - {{eq.end_time}}</td>            
+                  </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
