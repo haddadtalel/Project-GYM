@@ -18,13 +18,20 @@ class Equipment(models.Model):
     maintenanceDate = models.DateField(_("Maintenance Date"), null=True,blank=True)
     is_available =  models.BooleanField(_("Availability Status"),default=True)
     url =  models.TextField(_("Url"),null=True,blank=True)
+    
+    price = models.FloatField(_("Price"),null=True,blank=True)
+    brand = models.CharField(_("Brand"),max_length=50, null=True,blank=True)
 
     def __str__(self) -> str:
         return f'{self.name}'
+    
+    def get_eqTypes(self):
+        eqType = self.equipmentType.all()
+        return eqType    
 
 class EquipmentActivityTrack(models.Model):
-    start_time = models.DateField(_("Booking start"),null=True,blank=True)
-    end_time = models.DateField(_("Booking end"),null=True,blank=True)
+    start_time = models.DateTimeField(_("Booking start"),null=True,blank=True)
+    end_time = models.DateTimeField(_("Booking end"),null=True,blank=True)
 
     booked_by = models.ForeignKey(User, on_delete=models.CASCADE,null=True,blank=True)
     booked_for =models.ForeignKey('member.Member', on_delete=models.CASCADE,null=True,blank=True)

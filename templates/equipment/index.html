@@ -7,7 +7,8 @@
         <!-- Entry Form starts  -->
         <div class="formSection bg-white p-4 rounded shadow-md mb-4">
             <h3 class="text-2xl font-bold mb-4">New Equipment Form</h3>
-            <form class="grid grid-cols-2 gap-4">
+            <form class="grid grid-cols-2 gap-4" method="post">
+              {% csrf_token %}
                 <!-- Col 1 -->
                 <div class="grid gap-2">
                     <!-- Name -->
@@ -22,10 +23,11 @@
                     <!-- Price -->
                     <input class="border w-full p-4 leading-tight bg-slate-100" name="price" type="number" placeholder="Price" required />                 
                     <!-- Equipment Type  -->
-                    <select name="eqType" class="border w-full p-4 leading-tight bg-slate-100" required>
+                    <select name="eqType" class="border w-full p-4 leading-tight bg-slate-100" multiple required>
                       <option hidden>Equipment Type</option>
-                      <option value="general">General</option>
-                      <option value="premium">Premium</option>
+                      {% for eq in eqTypes %}
+                        <option value="{{eq.id}}">{{eq.name}}</option>
+                      {% endfor %}
                     </select>      
                      <!-- Cost Condition -->
                      <select name="costCondition" class="border w-full p-4 leading-tight bg-slate-100" required>
@@ -53,17 +55,21 @@
               <tr>
                 <th scope="col" class="px-6 py-3">Serial</th>
                 <th scope="col" class="px-6 py-3">Name</th>
+                <th scope="col" class="px-6 py-3">Brand</th>
                 <th scope="col" class="px-6 py-3">Status</th>
                 <th scope="col" class="px-6 py-3">View</th>
               </tr>
             </thead>
             <tbody>
+              {% for eq in eqs %}
               <tr class="bg-white border text-sm text-center">
-                <td class="px-6 py-4">MID-101</td>
-                <td class="px-6 py-4">Marco</td>
-                <td class="px-6 py-4">Active</td>
-                <td class="px-6 py-4"><a class="underline" href="/equipment/edit/1">View</a></td>
+                <td class="px-6 py-4">{{eq.serial}}</td>
+                <td class="px-6 py-4">{{eq.name}}</td>
+                <td class="px-6 py-4">{{eq.brand}}</td>
+                <td class="px-6 py-4">{{eq.is_available}}</td>
+                <td class="px-6 py-4"><a class="underline" href="{% url "equipment:edit" eq.id %}">View</a></td>
               </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>

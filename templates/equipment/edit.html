@@ -7,25 +7,36 @@
             <!-- Entry Form starts  -->
             <div class="formSection bg-white px-10 py-8 rounded shadow-md mb-4">
                 <h3 class="text-2xl font-bold mb-4">Edit Equipment Form</h3>
-                <form class="grid grid-cols-2 gap-4">
+                <form class="grid grid-cols-3 gap-4" method="post">
+                    {% csrf_token %}
                     <!-- Col 1 -->
                     <div class="grid gap-2">
                         <!-- Name -->
-                        <input class="border w-full p-4 leading-tight bg-slate-100" name="name" type="text" placeholder="Name" required />
+                        <input class="border w-full p-4 leading-tight bg-slate-100" name="name" type="text" placeholder="Name" required value="{{eq.name}}" />
                         <!-- Brand  -->
-                        <input class="border w-full p-4 leading-tight bg-slate-100" name="brand" type="text" placeholder="Brand" />
-                        <!-- Serial -->
-                        <input class="border w-full p-4 leading-tight bg-slate-100 disabled:cursor-not-allowed disabled:bg-slate-300" name="serial" type="text" placeholder="Serial" disabled />
+                        <input class="border w-full p-4 leading-tight bg-slate-100" name="brand" type="text" placeholder="Brand" value="{{eq.brand}}" />                     
                     </div>
                     <!-- Col 2 -->
                     <div class="grid gap-2">
                         <!-- Price -->
-                        <input class="border w-full p-4 leading-tight bg-slate-100 disabled:cursor-not-allowed disabled:bg-slate-300" name="price" type="number" placeholder="Price" disabled />                 
+                        <input class="border w-full p-4 leading-tight bg-slate-100 disabled:cursor-not-allowed disabled:bg-slate-300" name="price" type="number" placeholder="Price" disabled value="{{eq.price}}" />                 
+                         <!-- Serial -->
+                         <input class="border w-full p-4 leading-tight bg-slate-100 disabled:cursor-not-allowed disabled:bg-slate-300" name="serial" type="text" placeholder="Serial" disabled value="{{eq.serial}}" />
+                    </div>
+                    <!-- Col 3 -->
+                    <div class="grid gap-2">               
                         <!-- Equipment Type  -->
-                        <select name="eqType" class="border w-full p-4 leading-tight bg-slate-100">
-                          <option hidden>Equipment Type</option>
-                          <option value="general">General</option>
-                          <option value="premium">Premium</option>
+                        <select name="eqType" class="border w-full p-4 leading-tight bg-slate-100" multiple>
+                            <optgroup label="Selected">
+                                {% for eqT in eq.get_eqTypes  %}                               
+                                    <option selected value="{{eqT.id}}">{{eqT.name}}</option>
+                                {% endfor %}                          
+                            </optgroup>
+                            <optgroup label="All">
+                            {% for eqt in eqTypes %}
+                                     <option value="{{eqt.id}}">{{eqt}}</option>
+                            {% endfor %}
+                            </optgroup>
                         </select>      
                     </div>
                     <div>
@@ -36,7 +47,18 @@
                         </button>
                     </div>
                     <div>
-                        <a class="bg-red-900 text-white font-bold py-2 px-4 w-full inline-block text-center cursor-pointer">
+                        {% if eq.is_available %}
+                        <a href="{% url "equipment:deactivate"  eq.id %}" class="bg-yellow-900 text-white font-bold py-2 px-4 w-full inline-block text-center cursor-pointer">
+                            Maintenence Mode
+                        </a>
+                        {% else %}
+                        <a href="{% url "equipment:active"  eq.id %}" class="bg-green-900 text-white font-bold py-2 px-4 w-full inline-block text-center cursor-pointer">
+                            Make Available
+                        </a>
+                    {% endif %}
+                    </div>
+                    <div>
+                        <a  href="{% url "equipment:delete"  eq.id %}"  class="bg-red-900 text-white font-bold py-2 px-4 w-full inline-block text-center cursor-pointer">
                             Delete Equipment
                         </a>
                     </div>
