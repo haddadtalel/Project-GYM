@@ -7,43 +7,45 @@
         <!-- Form starts  -->
         <div class="formSection bg-white px-10 py-8 rounded shadow-md mb-4">
             <h3 class="text-2xl font-bold mb-4">Edit Coach</h3>
-            <form class="grid grid-cols-3 gap-4">
+            <form class="grid grid-cols-3 gap-4" method="post">
+                {% csrf_token %}
                 <!-- Col 1 -->
-                <div class="grid gap-2">
-                    <!-- User name -->
-                    <input class="border w-full p-4 leading-tight bg-slate-100 disabled:cursor-not-allowed disabled:bg-slate-300" name="username" type="text" placeholder="Username" disabled />
+                <div class="grid gap-2">       
+                    <!-- Coach ID -->
+                    <input class="border w-full p-4 leading-tight bg-slate-100 disabled:cursor-not-allowed disabled:bg-slate-300" name="empId" type="text" placeholder="Coach ID" disabled value={{coach.coachId}} />
                     <!-- Name -->
-                    <input class="border w-full p-4 leading-tight bg-slate-100" name="name" type="text" placeholder="Name" required />
-                    <!-- DOB  -->
-                    <input class="border w-full p-4 leading-tight bg-slate-100" name="dob" type="date" required />
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="name" type="text" placeholder="Name" required value="{{coach.name}}" />
+                    <!-- Salary -->
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="salary" type="number" placeholder="Salary" required value={{coach.salary}} />
                 </div>
                 <!-- Col 2 -->
-                <div class="grid gap-2">
-                    <!-- Employee ID -->
-                    <input class="border w-full p-4 leading-tight bg-slate-100 disabled:cursor-not-allowed disabled:bg-slate-300" name="empId" type="text" placeholder="Employee ID" disabled />
+                <div class="grid gap-2">   
                     <!-- Phone -->
-                    <input class="border w-full p-4 leading-tight bg-slate-100" name="phone" type="tel" placeholder="Phone" required />
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="phone" type="tel" placeholder="Phone" required value={{coach.phone}} />
                     <!-- NID -->
-                    <input class="border w-full p-4 leading-tight bg-slate-100" name="nid" type="text" placeholder="NID" required />
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="nid" type="text" placeholder="NID" required value={{coach.nid}} />
                 </div>
                 <!-- Col 3 -->
-                <div class="grid gap-2">
-                    <!-- Salary -->
-                    <input class="border w-full p-4 leading-tight bg-slate-100" name="salary" type="number" placeholder="Salary" required />
+                <div class="grid gap-2">            
                     <!-- Address -->
-                    <textarea class="border w-full p-4 leading-tight bg-slate-100" name="address" placeholder="Address" required ></textarea>
+                    <textarea class="border w-full p-4 leading-tight bg-slate-100" name="address" placeholder="Address" required >{{coach.address}}</textarea>
                      <!-- Reference -->
-                     <input class="border w-full p-4 leading-tight bg-slate-100" name="ref" type="text" placeholder="Refrence" />    
+                     <input class="border w-full p-4 leading-tight bg-slate-100" name="ref" type="text" placeholder="Refrence" value={{coach.ref}} />    
                 </div>
                 <!-- Schedule -->
                 <div class="col-span-3">
                     <span class="font-semibold mb-1 inline-block">Select Schedule</span>
                     <select name="schedule" multiple class="border w-full p-4 leading-tight bg-slate-100">
-                        <option value="apple">Apple</option>
-                        <option value="banana">Banana</option>
-                        <option value="orange">Orange</option>
-                        <option value="grape">Grape</option>
-                        <option value="mango">Mango</option>
+                        <optgroup label="Selected">
+                            {% for schedule in coach.get_schedules  %}                               
+                                <option selected value="{{schedule.id}}">{{schedule}}</option>
+                            {% endfor %}                          
+                        </optgroup>
+                        <optgroup label="All">
+                        {% for schedule in schedules %}
+                                 <option value="{{schedule.id}}">{{schedule}}</option>
+                        {% endfor %}
+                        </optgroup>
                       </select>
                 </div>
                 <div>
@@ -54,13 +56,19 @@
                     </button>
                 </div>
                 <div>
-                    <a class="bg-yellow-900 text-white font-bold py-2 px-4 w-full inline-block text-center cursor-pointer">
-                      Deactivate Account
-                    </a>
+                    {% if coach.status %}
+                        <a href="{% url "coach:deactivate"  coach.id %}" class="bg-yellow-900 text-white font-bold py-2 px-4 w-full inline-block text-center cursor-pointer">
+                            Suspend Coach
+                        </a>
+                        {% else %}
+                        <a href="{% url "coach:active"  coach.id %}" class="bg-green-900 text-white font-bold py-2 px-4 w-full inline-block text-center cursor-pointer">
+                            Activate Coach
+                        </a>
+                {% endif %}
                 </div>
                 <div>
-                    <a class="bg-red-900 text-white font-bold py-2 px-4 w-full inline-block text-center cursor-pointer">
-                        Delete Account
+                    <a href="{% url "coach:delete" coach.id %}" class="bg-red-900 text-white font-bold py-2 px-4 w-full inline-block text-center cursor-pointer">
+                        Delete Coach
                     </a>
                 </div>
             </form>

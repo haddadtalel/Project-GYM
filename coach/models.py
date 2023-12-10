@@ -13,17 +13,17 @@ GENDER_CHOICES = [
 class Coach(models.Model):
     coachId = models.CharField(_("Coach Id"),max_length=20,null=True,blank=True)
     name = models.CharField(_("Full Name"),max_length=50,null=True,blank=True)
-    phone = models.CharField(_("Phone"),unique=True,max_length=11,blank=True,null=True)
+    phone = models.CharField(_("Phone"),unique=True,max_length=15,blank=True,null=True)
     dob = models.DateField(_("Date of Birth"),null=True,blank=True)
     
     nid = models.CharField(_("NID"),max_length=20,null=True,blank=True)
     ref = models.CharField(_("Reference"),max_length=50,null=True,blank=True)
     salary = models.FloatField(_("Salary"),blank=True,null=True)
     gender = models.CharField(_("Gender"),max_length=50, null=True,blank=True,choices=GENDER_CHOICES)
-
+    address = models.TextField(_("Address"),blank=True,null=True)
     schedules = models.ManyToManyField(Schedule,blank=True)
 
-    due_salary = models.FloatField(_("Due Salary"),default=0)
+    due = models.FloatField(_("Due Salary"),default=0)
 
     join_date = models.DateField(_("Joining Date"), null=True,blank=True)
 
@@ -31,6 +31,10 @@ class Coach(models.Model):
 
     def __str__(self) :
         return f'{self.name}'
+    
+    def get_schedules(self):
+        schedules = self.schedules.all()
+        return schedules    
 
 class CoachActivityTrack(models.Model):
     start_time = models.DateField(_("Booking start"),null=True,blank=True)

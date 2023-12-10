@@ -12,10 +12,10 @@
           <div class="grid gap-2">
             <!-- Name -->
             <input class="border w-full p-4 leading-tight bg-slate-100" name="name" type="text" placeholder="Name"
-              required />
+              required value={{package.name}} />
             <!-- Price -->
             <input class="border w-full p-4 leading-tight bg-slate-100" name="price" type="number" placeholder="Price"
-              required />
+              required value={{package.price}}  />
           </div>
           <!-- Col 2 -->
           <div class="grid gap-2">
@@ -28,9 +28,9 @@
           </div>
           <!-- Col 3 -->
           <div class="grid gap-2">
-            <!-- Address -->
+            <!-- Description -->
             <textarea class="border w-full p-4 leading-tight bg-slate-100" name="desc" placeholder="Description"
-              required></textarea>
+              required>{{package.desc}}</textarea>
           </div>
           <!-- Schedule -->
           <div class="col-span-2">

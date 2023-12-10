@@ -22,28 +22,14 @@
     <!-- dashboard lists  -->
     <div class="dashBoardLinks">
       <ul class="space-y-2 font-medium">
+        {% if request.user.is_manager %}
         <li>
-          {% if request.user.is_manager %}
             <a
             href="{% url "managerDashboard" %}"
             class="border border-gray-50 flex justify-center items-center p-2 text-gray-100 rounded hover:bg-gray-100 hover:text-gray-900"
             >
             <p class="ms-3">Dashboard</p>
-          </a>
-            <a
-            href="{% url "employeeDashboard" %}"
-            class="border border-gray-50 flex justify-center items-center p-2 text-gray-100 rounded hover:bg-gray-100 hover:text-gray-900"
-            >
-            <p class="ms-3">E Dashboard</p>
-          </a>
-          {% else %}
-          <a
-          href="#"
-          class="border border-gray-50 flex justify-center items-center p-2 text-gray-100 rounded hover:bg-gray-100 hover:text-gray-900"
-          >
-          <p class="ms-3">Dashboard</p>
-        </a>
-          {% endif %}
+          </a>        
         </li>
         <li>
           <a
@@ -83,15 +69,6 @@
         <!--  -->
         <li>
           <a
-            href="{% url "member:index" %}"
-            class="border border-gray-50 flex justify-center items-center p-2 text-gray-100 rounded hover:bg-gray-100 hover:text-gray-900"
-          >
-            <p class="ms-3">Members</p>
-          </a>
-        </li>
-        <!--  -->
-        <li>
-          <a
             href="{% url "package:index" %}"
             class="border border-gray-50 flex justify-center items-center p-2 text-gray-100 rounded hover:bg-gray-100 hover:text-gray-900"
           >
@@ -107,6 +84,25 @@
             <p class="ms-3">Payment</p>
           </a>
         </li>
+          {% else %}
+          <li>
+          <a
+          href="{% url "employeeDashboard" %}"
+          class="border border-gray-50 flex justify-center items-center p-2 text-gray-100 rounded hover:bg-gray-100 hover:text-gray-900"
+          >
+          <p class="ms-3">Dashboard</p>
+        </a>
+        </li>
+        <li>
+          <a
+            href="{% url "member:index" %}"
+            class="border border-gray-50 flex justify-center items-center p-2 text-gray-100 rounded hover:bg-gray-100 hover:text-gray-900"
+          >
+            <p class="ms-3">Members</p>
+          </a>
+        </li>
+        <!--  -->     
+      {% endif %}  
       </ul>
     </div>
 

@@ -20,4 +20,4 @@ class Package(models.Model):
     frequency = models.CharField(_("Frequency"),max_length=50, null=True,blank=True,choices=FREQUENCY_CHOICES)
 
     def __str__(self) -> str:
-        return f'{self.name} | {self.price}'
+        return f'{self.name} | {self.price} | {self.frequency}'

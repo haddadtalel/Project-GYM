@@ -7,7 +7,8 @@
         <!-- Entry Form starts  -->
         <div class="formSection bg-white p-4 rounded shadow-md mb-4">
             <h3 class="text-2xl font-bold mb-4">New Employee Form</h3>
-            <form class="grid grid-cols-3 gap-4">
+            <form class="grid grid-cols-3 gap-4" method="post">
+              {% csrf_token %}
                 <!-- Col 1 -->
                 <div class="grid gap-2">
                     <!-- User name -->
@@ -42,12 +43,10 @@
                 <!-- Schedule -->
                 <div class="col-span-3">
                     <span class="font-semibold mb-1 inline-block">Select Schedule</span>
-                    <select name="schedule" multiple class="border w-full p-4 leading-tight bg-slate-100">
-                        <option value="apple">Apple</option>
-                        <option value="banana">Banana</option>
-                        <option value="orange">Orange</option>
-                        <option value="grape">Grape</option>
-                        <option value="mango">Mango</option>
+                    <select name="schedule" multiple class="border w-full p-4 leading-tight bg-slate-100" required>
+                        {% for schedule in schedules %}
+                          <option value="{{schedule.id}}">{{schedule}}</option>
+                        {% endfor %}
                       </select>
                 </div>
                 <div class="col-span-3">
@@ -77,14 +76,16 @@
               </tr>
             </thead>
             <tbody>
+              {% for employee in employees %}
               <tr class="bg-white border text-sm text-center">
-                <td class="px-6 py-4">MID-101</td>
-                <td class="px-6 py-4">Marco</td>
-                <td class="px-6 py-4">123456</td>
-                <td class="px-6 py-4">Paid</td>
-                <td class="px-6 py-4">Active</td>
-                <td class="px-6 py-4"><a class="underline" href="/user/edit/1">View</a></td>
+                <td class="px-6 py-4">{{employee.emp_id}}</td>
+                <td class="px-6 py-4">{{employee.name}}</td>
+                <td class="px-6 py-4">{{employee.phone}}</td>
+                <td class="px-6 py-4">{{employee.salary}}</td>
+                <td class="px-6 py-4">{{employee.is_active}}</td>
+                <td class="px-6 py-4"><a class="underline" href="{% url "user:edit" employee.id %}">View</a></td>
               </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>

@@ -13,11 +13,11 @@ urlpatterns = [
     path('employeeDashboard/', views.employeeDashboard, name='employeeDashboard'),
     path('coachDashboard/', views.coachDashboard, name='coachDashboard'),
 
-    path('user/', include("user.urls",namespace="user")),
-    path('schedule/', include("schedule.urls",namespace="schedule")),
-    path('equipment/', include("equipment.urls",namespace="equipment")),
-    path('package/', include("package.urls",namespace="package")),
+    path('user/', decorator_include(login_required,"user.urls",namespace="user")),
+    path('schedule/', decorator_include(login_required,"schedule.urls",namespace="schedule")),
+    path('equipment/', decorator_include(login_required,"equipment.urls",namespace="equipment")),
+    path('package/', decorator_include(login_required,"package.urls",namespace="package")),
     path('member/', decorator_include(login_required,"member.urls",namespace="member")),
-    path('coach/', include("coach.urls",namespace="coach")),
-    path('transaction/', include("transaction.urls",namespace="transaction")),
+    path('coach/', decorator_include(login_required,"coach.urls",namespace="coach")),
+    path('transaction/', decorator_include(login_required,"transaction.urls",namespace="transaction")),
 ]

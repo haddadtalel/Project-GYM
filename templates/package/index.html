@@ -22,8 +22,9 @@
           <!-- Payment Frequency  -->
           <select name="paymentFreq" class="border w-full p-4 leading-tight bg-slate-100">
             <option hidden>Payment Frequency</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            {% for fre in FREQUENCY_CHOICES %}
+              <option value="{{fre.0}}">{{fre.1}}</option>
+            {% endfor %}
           </select>
         </div>
         <!-- Col 3 -->
@@ -36,11 +37,9 @@
         <div class="col-span-2">
           <span class="font-semibold mb-1 inline-block">Select Schedule</span>
           <select name="schedule" multiple class="border w-full p-4 leading-tight bg-slate-100">
-            <option value="apple">Apple</option>
-            <option value="banana">Banana</option>
-            <option value="orange">Orange</option>
-            <option value="grape">Grape</option>
-            <option value="mango">Mango</option>
+            {% for schedule in schedules %}
+              <option value="{{schedule.id}}">{{schedule}}</option>
+            {% endfor %}
           </select>
         </div>
         <!-- Equipment Type  -->
@@ -48,8 +47,9 @@
           <span class="font-semibold mb-1 inline-block">Select Equipment Types</span>
           <select name="eqType" class="border w-full p-4 leading-tight bg-slate-100" multiple>
             <option hidden>Equipment Type</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            {% for eq in eqTypes %}
+              <option value="{{eq.id}}">{{eq}}</option>
+            {% endfor %}
           </select>
         </div>
         <div class="col-span-3">
@@ -72,12 +72,14 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="bg-white border text-sm text-center">
-              <td class="px-6 py-4">MID-101</td>
-              <td class="px-6 py-4">Marco</td>
-              <td class="px-6 py-4">Active</td>
-              <td class="px-6 py-4"><a class="underline" href="/package/edit/1">View</a></td>
-            </tr>
+            {% for package in packages %}
+              <tr class="bg-white border text-sm text-center">
+                  <td class="px-6 py-4">{{package.name}}</td>
+                  <td class="px-6 py-4">{{package.price}}</td>
+                  <td class="px-6 py-4">{{package.frequency}}</td>
+                  <td class="px-6 py-4"><a class="underline" href="{% url "package:edit" package.id %}">View</a></td>
+              </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
