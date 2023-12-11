@@ -14,6 +14,9 @@ urlpatterns = [
     path('employeeDashboard/', views.employeeDashboard, name='employeeDashboard'),
     path('coachDashboard/', views.coachDashboard, name='coachDashboard'),
 
+    path('employeeAttendance/', views.employeeAttendance, name='employeeAttendance'),
+    path('coachAttendance/<int:pk>', views.coachAttendance, name='coachAttendance'),
+
     path('user/', decorator_include(manager_access,"user.urls",namespace="user")),
     path('schedule/', decorator_include(manager_access,"schedule.urls",namespace="schedule")),
     path('equipment/', decorator_include(login_required,"equipment.urls",namespace="equipment")),

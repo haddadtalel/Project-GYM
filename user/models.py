@@ -34,6 +34,10 @@ class User(AbstractUser):
     def get_schedules(self):
         schedules = self.schedules.all()
         return schedules    
+    
+    def get_schedules_filter(self,day):
+        schedules = self.schedules.filter(day=day)
+        return schedules    
 
     def __str__(self) :
         return f'{self.username}'

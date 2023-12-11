@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'package',
     'transaction',
     'schedule',
+    'attendance',
 ]
 
 MIDDLEWARE = [

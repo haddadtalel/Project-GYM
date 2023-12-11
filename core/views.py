@@ -2,6 +2,7 @@ from django.shortcuts import render,HttpResponse,redirect
 from django.contrib.auth import authenticate, login, logout as lg
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.contrib import messages
 
 from django.utils import timezone
 from django.db.models import Sum
@@ -11,6 +12,17 @@ from user.models import MetaData,User
 from member.models import Member
 from coach.models import Coach,CoachActivityTrack
 from transaction.models import Debit,Credit
+from attendance.models import Attendance
+
+week_day = {
+    'Saturday': 0,
+    'Sunday': 1,
+    'Monday': 2,
+    'Tuesday': 3,
+    'Wednesday': 4,
+    'Thursday': 5,
+    'Friday': 6,
+}
 # Create your views here.
 
 def index(request):
@@ -33,6 +45,8 @@ def index(request):
             login(request,user)   
             # Redirect the user to suitable url
             return redirect(success_url)
+        else:
+            messages.error(request,"User not found")
     return render(request,'auth/login.html')
 
 @login_required
@@ -141,13 +155,126 @@ def employeeDashboard(request):
     initialize(request)
     if request.user.is_manager:
         return redirect('/managerDashboard/')
-    
     user = request.user
 
+    current_day = (datetime.now()).strftime('%A')
+    current_time = datetime.now().time()
+
+    flag = 0
+    schedules = user.get_schedules_filter(current_day)
+    for sc in schedules:
+        # Within Shift or not
+        if sc.start_time <= current_time <= sc.end_time:
+            flag = 1
+            break
+
+    attendance = Attendance.objects.filter(date__week_day=week_day[current_day],employee = user,attendance = True)
+    # Attendance Already Given
+    if attendance.count() > 0:
+        flag = 2
+
+    # Get Eligible Coach List
+    absent_list = []
+    if flag != 0:
+        coaches = Coach.objects.filter(status = True)
+        current_coaches = []
+        for coach in coaches:
+            schedules = coach.get_schedules_filter(current_day)
+            for sc in schedules:
+                if sc.start_time <= current_time <= sc.end_time:
+                    current_coaches.append(coach)
+                    break
+        for curr in current_coaches:
+            attendances = Attendance.objects.filter(date__week_day=week_day[current_day],coach = curr)
+            if attendances.count() == 0:
+                absent_list.append(curr)
+            else:
+                for attendance in attendances:
+                    if attendance.attendance == False:
+                        absent_list.append(curr)
     context = {
-        'user':user
+        'user':user,
+        'date': datetime.now(),
+        'absent_list':absent_list,
+        'flag':flag
     }
     return render(request, "dashboard/employee.html",context)
+
+@login_required
+def initAttendance(request):
+    employees = User.objects.filter(status = True)
+    current_day = (datetime.now()).strftime('%A')
+    emp_list = []
+    for emp in employees:
+        schedules = emp.get_schedules_filter(current_day)
+        for sc in schedules:
+            if sc.day == current_day:
+                emp_list.append(emp)
+
+    bulk_employee = []
+    for emp in emp_list:
+        bulk_employee.append(
+            Attendance(
+                date = datetime.now(),
+                is_employee = True,
+                employee = emp,
+                attendance = False
+            )
+        )
+    Attendance.objects.bulk_create(bulk_employee)
+    # Coach
+    coaches = Coach.objects.filter(status = True)
+    coach_list = []
+    for coach in coaches:
+        schedules = coach.get_schedules_filter(current_day)
+        for sc in schedules:
+            if sc.day == current_day:
+                coach_list.append(coach)
+    bulk_coach = []
+    for coach in coach_list:
+        bulk_coach.append(
+            Attendance(
+                date = datetime.now(),
+                is_coach = True,
+                coach = coach,
+                attendance = False
+            )
+        )
+    Attendance.objects.bulk_create(bulk_coach)
+
+def employeeAttendance(request):
+    current_day = (datetime.now()).strftime('%A')
+
+    attendance = Attendance.objects.filter(date__week_day=week_day[current_day])
+
+    if attendance.count() == 0:
+        initAttendance(request)
+        attendance = Attendance.objects.get(employee = request.user,attendance=False)
+        attendance.attendance = True
+        attendance.save()
+    else:
+        attendance = Attendance.objects.get(employee = request.user,attendance=False)
+        attendance.attendance = True
+        attendance.save()
+    return redirect('/employeeDashboard/')
+
+def coachAttendance(request,pk):
+    coach = Coach.objects.get(id = pk)
+    current_day = (datetime.now()).strftime('%A')
+
+    attendance = Attendance.objects.filter(date__week_day=week_day[current_day])
+
+    if attendance.count() == 0:
+        initAttendance(request)
+        attendance = Attendance.objects.get(coach = coach,attendance=False)
+        attendance.attendance = True
+        attendance.save()
+    else:
+        attendance = Attendance.objects.get(coach = coach,attendance=False)
+        attendance.attendance = True
+        attendance.save()
+
+    return redirect('/employeeDashboard/')
 
 def coachDashboard(request):
     if request.method == "POST":

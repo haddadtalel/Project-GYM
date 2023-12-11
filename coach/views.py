@@ -8,6 +8,7 @@ from .models import Coach, CoachActivityTrack
 from member.models import Member
 from transaction.models import Debit
 from user.models import MetaData
+from attendance.models import Attendance
 # Create your views here.
 def index(request):
     schedules = Schedule.objects.filter(name = 'coach')
@@ -51,6 +52,12 @@ def edit(request,pk):
     coach = Coach.objects.get(id = pk)
     schedules = Schedule.objects.filter(name = 'coach')
 
+    current_month = datetime.now().month
+    current_year = datetime.now().year
+
+    # Query the income data for the current month
+    attendance = Attendance.objects.filter(date__month=current_month, date__year=current_year,coach=coach)
+    
     if request.method == "POST":
         name = request.POST.get("name")
         phone = request.POST.get("phone")
@@ -76,7 +83,8 @@ def edit(request,pk):
 
     context = {
         'coach': coach,
-        'schedules':schedules
+        'schedules':schedules,
+        'attendance':attendance
     }
     return render(request,"coach/edit.html",context)
 

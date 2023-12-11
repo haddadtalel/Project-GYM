@@ -1,8 +1,8 @@
 {% extends "../base.html" %}
 
 {% block body %}
-   <!-- component sections starts  -->
-   <div class="conponentSection p-5 sm:ml-64 bg-gray-200">
+<!-- component sections starts  -->
+<div class="conponentSection p-5 sm:ml-64 bg-gray-200">
     <div class="componentWrapper">
         <!-- Form starts  -->
         <div class="formSection bg-white px-10 py-8 rounded shadow-md mb-4">
@@ -12,69 +12,110 @@
                 <!-- Col 1 -->
                 <div class="grid gap-2">
                     <!-- User name -->
-                    <input class="border w-full p-4 leading-tight bg-slate-100 disabled:cursor-not-allowed disabled:bg-slate-300" name="username" type="text" placeholder="Username" value={{employee.username}} disabled />
+                    <input
+                        class="border w-full p-4 leading-tight bg-slate-100 disabled:cursor-not-allowed disabled:bg-slate-300"
+                        name="username" type="text" placeholder="Username" value={{employee.username}} disabled />
                     <!-- Name -->
-                    <input class="border w-full p-4 leading-tight bg-slate-100" name="name" type="text" placeholder="Name" value="{{employee.name}}" required />
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="name" type="text"
+                        placeholder="Name" value="{{employee.name}}" required />
                     <!-- Salary -->
-                    <input class="border w-full p-4 leading-tight bg-slate-100" name="salary" type="number" placeholder="Salary" required value={{employee.salary}} />
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="salary" type="number"
+                        placeholder="Salary" required value={{employee.salary}} />
                 </div>
                 <!-- Col 2 -->
                 <div class="grid gap-2">
                     <!-- Employee ID -->
-                    <input class="border w-full p-4 leading-tight bg-slate-100 disabled:cursor-not-allowed disabled:bg-slate-300" name="empId" type="text" placeholder="Employee ID" disabled value={{employee.emp_id}} />
+                    <input
+                        class="border w-full p-4 leading-tight bg-slate-100 disabled:cursor-not-allowed disabled:bg-slate-300"
+                        name="empId" type="text" placeholder="Employee ID" disabled value={{employee.emp_id}} />
                     <!-- Phone -->
-                    <input class="border w-full p-4 leading-tight bg-slate-100" name="phone" type="tel" placeholder="Phone" required value={{employee.phone}} />
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="phone" type="tel"
+                        placeholder="Phone" required value={{employee.phone}} />
                     <!-- NID -->
-                    <input class="border w-full p-4 leading-tight bg-slate-100" name="nid" type="text" placeholder="NID" required value={{employee.nid}} />
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="nid" type="text" placeholder="NID"
+                        required value={{employee.nid}} />
                 </div>
                 <!-- Col 3 -->
-                <div class="grid gap-2">              
+                <div class="grid gap-2">
                     <!-- Address -->
-                    <textarea class="border w-full p-4 leading-tight bg-slate-100" name="address" placeholder="Address" required >{{employee.address}}</textarea>
+                    <textarea class="border w-full p-4 leading-tight bg-slate-100" name="address" placeholder="Address"
+                        required>{{employee.address}}</textarea>
                     <!-- Password  -->
-                    <input class="border w-full p-4 leading-tight bg-slate-100" name="password" type="text" placeholder="Password"/>
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="password" type="text"
+                        placeholder="Password" />
                 </div>
                 <!-- Schedule -->
                 <div class="col-span-3">
                     <span class="font-semibold mb-1 inline-block">Select Schedule</span>
                     <select name="schedule" multiple class="border w-full p-4 leading-tight bg-slate-100">
-                            <optgroup label="Selected">
-                                {% for schedule in employee.get_schedules  %}                               
-                                    <option selected value="{{schedule.id}}">{{schedule}}</option>
-                                {% endfor %}                          
-                            </optgroup>
-                            <optgroup label="All">
-                            {% for schedule in schedules %}
-                                     <option value="{{schedule.id}}">{{schedule}}</option>
+                        <optgroup label="Selected">
+                            {% for schedule in employee.get_schedules %}
+                            <option selected value="{{schedule.id}}">{{schedule}}</option>
                             {% endfor %}
-                            </optgroup>
-                      </select>
+                        </optgroup>
+                        <optgroup label="All">
+                            {% for schedule in schedules %}
+                            <option value="{{schedule.id}}">{{schedule}}</option>
+                            {% endfor %}
+                        </optgroup>
+                    </select>
                 </div>
                 <div>
-                    <button
-                      class="bg-blue-900 text-white font-bold py-2 px-4 w-full"
-                      type="submit">
-                      Update
+                    <button class="bg-blue-900 text-white font-bold py-2 px-4 w-full" type="submit">
+                        Update
                     </button>
                 </div>
                 <div>
                     {% if employee.is_active %}
-                        <a href="{% url "user:deactivate"  employee.id %}" class="bg-yellow-900 text-white font-bold py-2 px-4 w-full inline-block text-center cursor-pointer">
-                            Deactivate Account
-                        </a>
-                        {% else %}
-                        <a href="{% url "user:active"  employee.id %}" class="bg-green-900 text-white font-bold py-2 px-4 w-full inline-block text-center cursor-pointer">
-                            Activate Account
-                        </a>
+                    <a href="{% url "user:deactivate" employee.id %}"
+                        class="bg-yellow-900 text-white font-bold py-2 px-4 w-full inline-block text-center cursor-pointer">
+                        Deactivate Account
+                    </a>
+                    {% else %}
+                    <a href="{% url "user:active" employee.id %}"
+                        class="bg-green-900 text-white font-bold py-2 px-4 w-full inline-block text-center cursor-pointer">
+                        Activate Account
+                    </a>
                     {% endif %}
                 </div>
                 <div>
-                    <a href="{% url "user:delete"  employee.id %}"  class="bg-red-900 text-white font-bold py-2 px-4 w-full inline-block text-center cursor-pointer">
+                    <a href="{% url "user:delete" employee.id %}"
+                        class="bg-red-900 text-white font-bold py-2 px-4 w-full inline-block text-center cursor-pointer">
                         Delete Account
                     </a>
                 </div>
             </form>
         </div>
+        <!-- Attendance -->
+        <section class="bg-gray-50 w-full p-4 shadow-xl rounded-md mt-4">
+            <div class="flex justify-between">
+                <h3 class="text-2xl font-bold">Attendance</h3>
+            </div>
+            <div class="relative overflow-x-auto mt-4">
+                <table class="w-full">
+                    <thead class="text-sm uppercase bg-blue-900 text-gray-50 text-center">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">Serial</th>
+                            <th scope="col" class="px-6 py-3">Attendance Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for att in attendance %}
+                        <tr class="bg-white border text-sm text-center">
+                            <td class="px-6 py-4">{{att.date}}</td>
+                            <td class="px-6 py-4">
+                                {% if att.attendance %}
+                                    Present
+                                    {% else %}
+                                    Absent
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </div>
-  </div>
+</div>
 {% endblock body %}
