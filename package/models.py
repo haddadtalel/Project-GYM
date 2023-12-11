@@ -25,5 +25,5 @@ class Package(models.Model):
     def get_equipmentTypes(self):
         return self.equipmentType.all()
     
-    def get_schedules(self):
-        return self.schedules.all()
+    def get_schedules_filter(self,day):
+        return self.schedules.filter(day=day)

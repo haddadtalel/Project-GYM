@@ -6,6 +6,7 @@ app_name = "equipment"
 urlpatterns = [
     path('', views.index , name='index'),
     path('edit/<int:pk>', views.edit , name='edit'),
+    path('activity/', views.activity , name='activity'),
     path('book/', views.book , name='book'),
     path('active/<int:pk>', views.active , name='active'),
     path('deactivate/<int:pk>', views.deactivate , name='deactivate'),

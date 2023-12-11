@@ -23,7 +23,7 @@ class Equipment(models.Model):
     brand = models.CharField(_("Brand"),max_length=50, null=True,blank=True)
 
     def __str__(self) -> str:
-        return f'{self.name}'
+        return f'{self.name} | {self.serial}'
     
     def get_eqTypes(self):
         eqType = self.equipmentType.all()
@@ -37,6 +37,7 @@ class EquipmentActivityTrack(models.Model):
     booked_for =models.ForeignKey('member.Member', on_delete=models.CASCADE,null=True,blank=True)
 
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE,null=True,blank=True)
+    is_active =  models.BooleanField(_("Is Active"),default=True)
 
     def __str__(self) -> str:
         return f'{self.equipment} | {self.start_time} - {self.end_time}'

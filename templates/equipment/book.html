@@ -6,10 +6,16 @@
         <!-- Entry Form starts  -->
         <div class="formSection bg-white p-4 rounded shadow-md mb-4">
             <h3 class="text-2xl font-bold mb-4">Search</h3>
-            <form>
-                <div class="grid grid-cols-2 gap-4">
-                    <input class="border w-full p-4 leading-tight bg-slate-100" name="searchEq" type="text"
+            <form method="post">
+                {% csrf_token %}
+                <div>
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="search" type="text"
                         placeholder="Search For Equipment" />
+                </div>
+                <div class="mt-4">
+                    <button class="bg-blue-900 text-white font-bold py-2 px-4 w-full" type="submit">
+                        Search
+                    </button>
                 </div>
             </form>
         </div>     
@@ -23,16 +29,22 @@
                                 <th scope="col" class="px-6 py-3">Serial</th>
                                 <th scope="col" class="px-6 py-3">Name</th>
                                 <th scope="col" class="px-6 py-3">Maintenance Status</th>
-                                <th scope="col" class="px-6 py-3">Action</th>
+                                <th scope="col" class="px-6 py-3">Equipment Type</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="bg-white border text-sm text-center">
-                                <td class="px-6 py-4">MID-101</td>
-                                <td class="px-6 py-4">Marco</td>
-                                <td class="px-6 py-4">Good Condition</td>
-                                <td class="px-6 py-4"><a class="underline" href="/user/edit/1">Toggle Status</a></td>
-                            </tr>
+                            {% for eq in eqs %}
+                                <tr class="bg-white border text-sm text-center">
+                                    <td class="px-6 py-4">{{eq.serial}}</td>
+                                    <td class="px-6 py-4">{{eq.name}}</td>
+                                    <td class="px-6 py-4">{{eq.is_available}}</td>
+                                    <td class="px-6 py-4">
+                                        {% for eqT in eq.get_eqTypes %}
+                                            {{eqT.name}},
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -45,39 +57,54 @@
                     <table class="w-full">
                         <thead class="text-sm uppercase bg-blue-900 text-gray-50 text-center">
                             <tr>
-                                <th scope="col" class="px-6 py-3">Serial</th>
-                                <th scope="col" class="px-6 py-3">Name</th>
-                                <th scope="col" class="px-6 py-3">Date</th>
-                                <th scope="col" class="px-6 py-3">For</th>
+                                <th scope="col" class="px-6 py-3">Equipment</th>
+                                <th scope="col" class="px-6 py-3">Duration</th>
+                                <th scope="col" class="px-6 py-3">Booked By</th>
+                                <th scope="col" class="px-6 py-3">Booked For</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="bg-white border text-sm text-center">
-                                <td class="px-6 py-4">MID-101</td>
-                                <td class="px-6 py-4">Marco</td>
-                                <td class="px-6 py-4">Good Condition</td>
-                                <td class="px-6 py-4">Good Condition</td>
-                            </tr>
+                            {% for eq in eqActivities %}
+                                <tr class="bg-white border text-sm text-center">
+                                    <td class="px-6 py-4">{{eq.equipment.name}} | {{eq.equipment.serial}}</td>
+                                    <td class="px-6 py-4">{{eq.start_time}} - {{eq.end_time}}</td>
+                                    <td class="px-6 py-4">{{eq.booked_by.name}} | {{eq.booked_by.emp_id}}</td>
+                                    <td class="px-6 py-4">{{eq.booked_for.name}} | {{eq.booked_for.memberId}}</td>
+                                </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
         <div class="bg-gray-50 p-4 shadow-xl rounded-md mt-4">
-            <div class="py-4 text-red-600 font-bold">
-                Wrong Member Id
-            </div>
+            {% for message in messages %}
+                <div class="py-4 text-red-600 font-bold">
+                    {{message}}
+                </div>
+            {% endfor %}
             <h3 class="text-2xl font-semibold mb-4">Book Equipment</h3>
-            <form class="grid grid-cols-3 gap-4">
+            <form class="grid grid-cols-3 gap-4" method="post" autocomplete="off" action="/equipment/book/">
+                {% csrf_token %}
                 <!-- Serial -->
                 <input class="border w-full p-4 leading-tight bg-slate-100" name="serial" type="text"
-                placeholder="Serial" />
+                placeholder="Equipment Serial" list="eqList" required />
+                <datalist id="eqList">
+                    {% for eq in eqs %}
+                        <option value="{{eq.serial}}"> {{eq.name}} | {{eq.is_available}} </option>
+                    {% endfor %}
+                </datalist>
                 <!-- For -->
                 <input class="border w-full p-4 leading-tight bg-slate-100" name="memId" type="text"
-                placeholder="Member Id" />
+                placeholder="Member Id" list="memberList" required />
+                <datalist id="memberList">
+                    {% for member in members %}
+                        <option value="{{member.memberId}}"> {{member.name}} | {{member.package.name}} | {{member.status}} </option>
+                    {% endfor %}
+                </datalist>
                 <!-- Date -->
-                <input class="border w-full p-4 leading-tight bg-slate-100" name="date" type="datetime"
-                placeholder="Date" />
+                <input class="border w-full p-4 leading-tight bg-slate-100" name="date" type="datetime-local"
+                placeholder="Date" required />
                 <div class="col-span-3">
                     <button
                       class="bg-blue-900 text-white font-bold py-2 px-4 w-full"
