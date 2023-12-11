@@ -36,12 +36,15 @@ class Coach(models.Model):
         schedules = self.schedules.all()
         return schedules    
 
+    def get_schedules_filter(self,day):
+        return self.schedules.filter(day=day)
+
 class CoachActivityTrack(models.Model):
-    start_time = models.DateField(_("Booking start"),null=True,blank=True)
-    end_time = models.DateField(_("Booking end"),null=True,blank=True)
+    start_time = models.DateTimeField(_("Booking start"),null=True,blank=True)
+    end_time = models.DateTimeField(_("Booking end"),null=True,blank=True)
     booked_by = models.ForeignKey(User, on_delete=models.CASCADE,null=True,blank=True)
     booked_for =models.ForeignKey(Member, on_delete=models.CASCADE,null=True,blank=True)
     coach = models.ForeignKey(Coach, on_delete=models.CASCADE,null=True,blank=True)
 
     def __str__(self) -> str:
-        return f'{self.equipment} | {self.start_time} - {self.end_time}'
+        return f'{self.coach} | {self.start_time} - {self.end_time}'

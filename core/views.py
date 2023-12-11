@@ -1,6 +1,7 @@
 from django.shortcuts import render,HttpResponse,redirect
 from django.contrib.auth import authenticate, login, logout as lg
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 from django.utils import timezone
 from django.db.models import Sum
@@ -8,7 +9,7 @@ from datetime import datetime
 
 from user.models import MetaData,User
 from member.models import Member
-from coach.models import Coach
+from coach.models import Coach,CoachActivityTrack
 from transaction.models import Debit,Credit
 # Create your views here.
 
@@ -149,4 +150,14 @@ def employeeDashboard(request):
     return render(request, "dashboard/employee.html",context)
 
 def coachDashboard(request):
+    if request.method == "POST":
+        searchCoach = request.POST.get("searchCoach")
+        current_datetime = timezone.now()
+
+        try:
+            coach = Coach.objects.get(coachId = searchCoach)
+            coachActivity = CoachActivityTrack.objects.filter(coach = coach,start_time__gt = current_datetime).order_by("start_time")
+            return render(request,"dashboard/coach.html",{'coach':coach,'coachActivity':coachActivity})
+        except:
+            pass
     return render(request,"dashboard/coach.html")

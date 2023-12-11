@@ -6,10 +6,16 @@
         <!-- Entry Form starts  -->
         <div class="formSection bg-white p-4 rounded shadow-md mb-4">
             <h3 class="text-2xl font-bold mb-4">Search</h3>
-            <form>
-                <div class="grid grid-cols-2 gap-4">
+            <form method="post">
+                {% csrf_token %}
+                <div>
                     <input class="border w-full p-4 leading-tight bg-slate-100" name="searchCoach" type="text"
                         placeholder="Search For Coach" />
+                </div>
+                <div class="mt-4">
+                    <button class="bg-blue-900 text-white font-bold py-2 px-4 w-full" type="submit">
+                        Search
+                    </button>
                 </div>
             </form>
         </div>     
@@ -27,12 +33,22 @@
                             </tr>
                         </thead>
                         <tbody>
+                        {% for coach in coaches %}
                             <tr class="bg-white border text-sm text-center">
-                                <td class="px-6 py-4">MID-101</td>
-                                <td class="px-6 py-4">Marco</td>
-                                <td class="px-6 py-4">Good Condition</td>
-                                <td class="px-6 py-4">Good Condition</td>
+                                <td class="px-6 py-4">{{coach.coachId}}</td>
+                                <td class="px-6 py-4">{{coach.name}}</td>
+                                <td class="px-6 py-4">{{coach.phone}}</td>
+                                <td class="px-6 py-4">
+                                <ul>
+                                    {% for sc in coach.get_schedules %}
+                                        <li>
+                                            {{sc}}    
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                </td>
                             </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -47,38 +63,57 @@
                             <tr>
                                 <th scope="col" class="px-6 py-3">Coach Id</th>
                                 <th scope="col" class="px-6 py-3">Name</th>
-                                <th scope="col" class="px-6 py-3">Date</th>
-                                <th scope="col" class="px-6 py-3">For</th>
+                                <th scope="col" class="px-6 py-3">Time(2 Hours)</th>
+                                <th scope="col" class="px-6 py-3">Booked By</th>
+                                <th scope="col" class="px-6 py-3">Booked For</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="bg-white border text-sm text-center">
-                                <td class="px-6 py-4">MID-101</td>
-                                <td class="px-6 py-4">Marco</td>
-                                <td class="px-6 py-4">Good Condition</td>
-                                <td class="px-6 py-4">Good Condition</td>
+                            {% for coach in coachActivities %}
+                                <tr class="bg-white border text-sm text-center">
+                                    <td class="px-6 py-4">{{coach.coach.coachId}}</td>
+                                <td class="px-6 py-4">{{coach.coach.name}}</td>
+                                <td class="px-6 py-4">{{coach.start_time}} - {{coach.end_time}}</td>
+                                <td class="px-6 py-4">{{coach.booked_by.name}} | {{coach.booked_by.emp_id}}</td>
+                                <td class="px-6 py-4">{{coach.booked_for.name}} | {{coach.booked_for.memberId}}</td>
                             </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
         <div class="bg-gray-50 p-4 shadow-xl rounded-md mt-4">
-            <div class="py-4 text-red-600 font-bold">
-                Wrong Member Id
+            {% for message in messages %}
+                <div class="py-4 text-red-600 font-bold">
+                    {{message}}
+                </div>
+            {% endfor %}
+            <div class="flex justify-between">
+                <h3 class="text-2xl font-semibold mb-4">Book Personal Session</h3>
+                <span>Session fee: 400 Taka for general members/ 200 Taka for premium members</span>
             </div>
-            <h3 class="text-2xl font-semibold mb-4">Book Personal Session</h3>
-            <form class="grid grid-cols-3 gap-4">
+            <form class="grid grid-cols-4 gap-4" autocomplete="off" method="post" action="/coach/book/">
+                {% csrf_token %}
                 <!-- Coach Id -->
-                <input class="border w-full p-4 leading-tight bg-slate-100" name="serial" type="text"
-                placeholder="Coach Id" />
+                <input class="border w-full p-4 leading-tight bg-slate-100" name="coachId" type="text" list="coachList" placeholder="Coach Id" required />
+                <datalist id="coachList">
+                    {% for coach in coaches %}
+                        <option value="{{coach.coachId}}"> {{coach.name}}</option>
+                    {% endfor %}
+                </datalist>
                 <!-- For -->
-                <input class="border w-full p-4 leading-tight bg-slate-100" name="memId" type="text"
-                placeholder="Member Id" />
+                <input class="border w-full p-4 leading-tight bg-slate-100" name="memId" type="text" placeholder="Member Id" list="memberId" required />
+                <datalist id="memberId">
+                    {% for member in members %}
+                        <option value="{{member.memberId}}"> {{member.name}} | {{member.package.name}} | {{member.status}}</option>
+                    {% endfor %}
+                </datalist>
                 <!-- Date -->
-                <input class="border w-full p-4 leading-tight bg-slate-100" name="date" type="datetime"
-                placeholder="Date" />
-                <div class="col-span-3">
+                <input class="border w-full p-4 leading-tight bg-slate-100" name="date" type="datetime-local" placeholder="Date" required />
+                <!-- Amount -->
+                <input class="border w-full p-4 leading-tight bg-slate-100" name="amount" type="number" placeholder="Amount" min="200" max="400" required />
+                <div class="col-span-4">
                     <button
                       class="bg-blue-900 text-white font-bold py-2 px-4 w-full"
                       type="submit">

@@ -10,6 +10,9 @@
                 <h3 class="text-2xl font-bold mb-4">Edit Member Form</h3>
                 <span>Bill Pay Left: {{member.due_payment}} Taka</span>
             </div>
+            <div class="mb-4 text-red-400 underline">
+                <a href="{% url "member:bill" %}">Pay Bill</a>
+            </div>
             <form class="grid grid-cols-3 gap-4" method="post">
                 {% csrf_token %}
                 <!-- Col 1 -->
