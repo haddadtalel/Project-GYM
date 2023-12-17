@@ -7,7 +7,7 @@
         <!-- Entry Form starts  -->
         <div class="formSection bg-white p-4 rounded shadow-md mb-4">
             <h3 class="text-2xl font-bold mb-4">New Member Form</h3>
-            <form class="grid grid-cols-3 gap-4" method="post">
+            <form class="grid grid-cols-4 gap-4" method="post">
               {% csrf_token %}
                 <!-- Col 1 -->
                 <div class="grid gap-2">
@@ -34,16 +34,28 @@
                 <!-- Col 3 -->
                 <div class="grid gap-2">      
                      <!-- Package  -->
-                     <select name="package" class="border w-full p-4 leading-tight bg-slate-100">
+                     <select name="package" id="package" class="border w-full p-4 leading-tight bg-slate-100">
                       <option hidden>Select a package</option>
                       {% for package in packages %}
-                        <option value="{{package.id}}">{{package.name}}</option>
+                        <option value="{{package.id}} - {{package.price}}">{{package.name}} - {{package.price}} Taka</option>
                       {% endfor %}
                     </select>     
                     <!-- Address -->
                     <textarea class="border w-full p-4 leading-tight bg-slate-100" name="address" placeholder="Address" required ></textarea>
                 </div>
-                <div class="col-span-3">
+                <!-- Col 4 -->
+                <div class="grid gap-2">      
+                     <!-- Payable Amount  -->
+                     <label for="">Total Amount</label>
+                     <input class="border w-full p-4 leading-tight bg-slate-100 disabled:bg-slate-400 disabled:cursor-not-allowed" name="payable_amount" id="payable_amount" type="number" value="0" placeholder="Payable Amount" disabled /> 
+                     <!-- Paying Amount  -->
+                     <label for="">Amount</label>
+                     <input class="border w-full p-4 leading-tight bg-slate-100 disabled:bg-slate-400 disabled:cursor-not-allowed" name="amount" id="amount" type="number" placeholder="0" disabled /> 
+                     <!-- Due Amount  -->
+                     <label for="">Due Amount</label>
+                     <input class="border w-full p-4 leading-tight bg-slate-100 disabled:bg-slate-400 disabled:cursor-not-allowed" name="due_amount" id="due_amount" type="number" value="0" disabled />              
+                </div>
+                <div class="col-span-4">
                     <button
                       class="bg-blue-900 text-white font-bold py-2 px-4 w-full"
                       type="submit">
@@ -86,3 +98,27 @@
     </div>
   </div>
 {% endblock body %}
+{% block js %}
+  <script>
+    $("document").ready(() => {
+      // Package Select
+      $("#package").change(e => {
+        let price = e.target.value;
+        price = price.split(' ');
+        price = price[2];
+        $("#payable_amount").val(`${price}`);
+        $("#amount").val(``);
+        $("#amount").removeAttr("disabled");
+        $("#due_amount").val(`${price}`);
+      });
+      // Amount Change
+      $("#amount").on('input',(e) => {
+        console.log(e);
+        let pa =  $("#payable_amount").val();
+        let a =  e.target.value;
+        let val = (Number(pa) - Number(a)) > 0 ? (Number(pa) - Number(a)) : 0; 
+        $("#due_amount").val(`${val}`);
+      })
+    })
+  </script>
+{% endblock js %}
