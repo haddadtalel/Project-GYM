@@ -1,4 +1,5 @@
 {% extends "../base.html" %}
+{% load custom_filters %}
 
 {% block body %}
    <!-- component sections starts  -->
@@ -7,11 +8,7 @@
         <!-- Entry Form starts  -->
         <div class="formSection bg-white p-4 rounded shadow-md mb-4">
             <div class="flex justify-between">
-                <h3 class="text-2xl font-bold mb-4">Edit Member Form</h3>
-                <span>Bill Pay Left: {{member.due_payment}} Taka</span>
-            </div>
-            <div class="mb-4 text-red-400 underline">
-                <a href="{% url "member:bill" %}">Pay Bill</a>
+                <h3 class="text-2xl font-bold mb-4">Member Details</h3>
             </div>
             <form class="grid grid-cols-3 gap-4" method="post">
                 {% csrf_token %}
@@ -29,7 +26,7 @@
                     <!-- Phone -->
                     <input class="border w-full p-4 leading-tight bg-slate-100" name="phone" type="tel" placeholder="Phone" required value="{{member.phone}}" />                 
                     <!-- Reference -->
-                    <input class="border w-full p-4 leading-tight bg-slate-100" name="ref" type="text" placeholder="Refrence" value="{{member.ref}}" />                     
+                    <input class="border w-full p-4 leading-tight bg-slate-100" name="ref" type="text" value="{{member.ref}}" />                     
                 </div>
                 <!-- Col 3 -->
                 <div class="grid gap-3">      
@@ -71,28 +68,37 @@
           <!-- Transaction History -->
           <section class="bg-gray-50 w-full p-4 shadow-xl rounded-md mt-4">
             <div class="flex justify-between">
-                <h3 class="text-2xl font-bold">User Transaction History</h3>
+                <h3 class="text-2xl font-bold">Monthly Transaction History</h3>
+                <span>
+                    {% if member.due_payment < 0 %}
+                    Total Advanced: 
+                    {{ member.due_payment|abs_val }} 
+                      {% else %}
+                      Total Due: 
+                      {{member.due_payment}}
+                    {% endif %}
+                    Taka ({{month}})
+                </span>
             </div>
             <div class="relative overflow-x-auto mt-4">
                 <table class="w-full">
                     <thead class="text-sm uppercase bg-blue-900 text-gray-50 text-center">
                         <tr>
-                            <th scope="col" class="px-6 py-3">Trx Id</th>
-                            <th scope="col" class="px-6 py-3">Date</th>
-                            <th scope="col" class="px-6 py-3">Amount</th>
+                            <th scope="col" class="px-6 py-3">Month</th>
+                            <th scope="col" class="px-6 py-3">Reason</th>
+                            <th scope="col" class="px-6 py-3">Total Amount</th>
+                            <th scope="col" class="px-6 py-3">Payed Amount</th>
+                            <th scope="col" class="px-6 py-3">Due Amount</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for att in attendance %}
+                        {% for bill in bills %}
                         <tr class="bg-white border text-sm text-center">
-                            <td class="px-6 py-4">{{att.date}}</td>
-                            <td class="px-6 py-4">
-                                {% if att.attendance %}
-                                    Present
-                                    {% else %}
-                                    Absent
-                                {% endif %}
-                            </td>
+                            <td class="px-6 py-4"><a class="underline" href="#">{{bill.month}}</a></td>
+                            <td class="px-6 py-4">{{bill.reason}}</td>
+                            <td class="px-6 py-4">{{bill.total_amount}}</td>
+                            <td class="px-6 py-4">{{bill.payed_amount}}</td>
+                            <td class="px-6 py-4"><a class="underline" href="{% url "member:bill" %}">{{bill.due_amount}}</a</td>
                         </tr>
                         {% endfor %}
                     </tbody>
