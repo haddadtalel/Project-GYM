@@ -28,7 +28,7 @@
                             <tr>
                                 <th scope="col" class="px-6 py-3">Serial</th>
                                 <th scope="col" class="px-6 py-3">Name</th>
-                                <th scope="col" class="px-6 py-3">Maintenance Status</th>
+                                <th scope="col" class="px-6 py-3">Maintenance Date</th>
                                 <th scope="col" class="px-6 py-3">Equipment Type</th>
                             </tr>
                         </thead>
@@ -37,7 +37,7 @@
                                 <tr class="bg-white border text-sm text-center">
                                     <td class="px-6 py-4">{{eq.serial}}</td>
                                     <td class="px-6 py-4">{{eq.name}}</td>
-                                    <td class="px-6 py-4">{{eq.is_available}}</td>
+                                    <td class="px-6 py-4">{{eq.maintenanceDate}}</td>
                                     <td class="px-6 py-4">
                                         {% for eqT in eq.get_eqTypes %}
                                             {{eqT.name}},

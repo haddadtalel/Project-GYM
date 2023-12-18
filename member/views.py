@@ -152,8 +152,6 @@ def paymentHistory(request,pk,month,year):
     payments = Debit.objects.filter(date__month=months[month],payed_by=member,date__year=year).order_by("-id")
     month = datetime.now().strftime("%B")
 
-    print(payments)
-
     context = {
         'member':member,
         'payments':payments,
@@ -167,7 +165,7 @@ def bill(request):
 
     if request.method == "POST":
         search = request.POST.get("search")
-        members = Member.objects.filter(Q(name__icontains=search) | Q(memberId__icontains=search))
+        members = Member.objects.filter(Q(name__icontains=search) | Q(memberId__icontains=search), due_payment__gt=0)
 
     context = {
         'members':members,
@@ -248,7 +246,7 @@ def pay(request):
             Debit.objects.create(
                 trxId = "FK-TRX-" + str(timestamp),
                 reason = "package_fee",
-                amount = int(amount),
+                amount = int(total_amount),
                 date = datetime.now(),
                 payed_by = member,
                 received_by = request.user

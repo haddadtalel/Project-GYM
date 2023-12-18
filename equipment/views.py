@@ -80,15 +80,15 @@ def edit(request,pk):
     return render(request,"equipment/edit.html",context)
 
 def activity(request):
-    eqs = Equipment.objects.all().order_by("-id")
+    eqs = Equipment.objects.filter(is_available = True).order_by("-id")
     eqActivities = EquipmentActivityTrack.objects.all().order_by("start_time")[:5]
-    members = Member.objects.all().order_by("-id")
+    members = Member.objects.filter(status=True).order_by("-id")
 
 
 
     if request.method == "POST":
         search = request.POST.get("search")
-        eqs = Equipment.objects.filter(Q(name__icontains=search) | Q(serial__icontains=search))
+        eqs = Equipment.objects.filter(Q(name__icontains=search) | Q(serial__icontains=search),is_available = True)
 
     context = {
         'eqs': eqs,

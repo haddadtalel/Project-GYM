@@ -11,7 +11,7 @@ from datetime import datetime
 from user.models import MetaData,User
 from member.models import Member
 from coach.models import Coach,CoachActivityTrack
-from transaction.models import Debit,Credit
+from transaction.models import Debit,Credit,Bill
 from attendance.models import Attendance
 
 week_day = {
@@ -58,6 +58,7 @@ def logout(request):
 def initialize(request):
     meta = MetaData.objects.last()
     current_month = timezone.now().month
+    current_year = timezone.now().year
 
     lastChecked = str(meta.lastChecked)
     lastChecked = lastChecked[5:7]
@@ -67,7 +68,22 @@ def initialize(request):
         members = Member.objects.all()
         for member in members:
             if member.package.frequency == "monthly" and member.status == True:
-                bill = member.package.price
+                bill = member.package.price            
+
+                bill_due = bill
+                if member.due_payment < 0:
+                    bill_due += member.due_payment
+
+                Bill.objects.create(
+                    month = datetime.now().strftime("%B"),
+                    year= current_year,
+                    reason='package_fee',
+                    total_amount = bill,
+                    payed_amount = 0,
+                    due_amount = bill_due,
+                    member = member
+                ) 
+
                 member.due_payment += bill
                 member.save()
         # Coach
