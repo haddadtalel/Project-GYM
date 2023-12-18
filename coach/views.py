@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from schedule.models import Schedule
 from .models import Coach, CoachActivityTrack
 from member.models import Member
-from transaction.models import Debit
+from transaction.models import Debit, Credit
 from user.models import MetaData
 from attendance.models import Attendance
 # Create your views here.
@@ -36,7 +36,8 @@ def index(request):
             salary = salary,
             address = address,
             ref = ref,
-            coachId = "FKC-" + str(lastId+1)
+            coachId = "FKC-" + str(lastId+1),
+            join_date = datetime.now()
         )
 
         for schedule in schedules_res:
@@ -51,6 +52,7 @@ def index(request):
 def edit(request,pk):
     coach = Coach.objects.get(id = pk)
     schedules = Schedule.objects.filter(name = 'coach')
+    salaries = Credit.objects.filter(coach = coach)
 
     current_month = datetime.now().month
     current_year = datetime.now().year
@@ -84,9 +86,23 @@ def edit(request,pk):
     context = {
         'coach': coach,
         'schedules':schedules,
-        'attendance':attendance
+        'attendance':attendance,
+        'salaries':salaries
     }
     return render(request,"coach/edit.html",context)
+
+def attendance(request,pk,id):
+    try:
+        coach = Coach.objects.get(id = pk)
+        attendance = Attendance.objects.get(coach = coach, id = id)
+        if attendance.attendance:
+            attendance.attendance = False
+        else:
+            attendance.attendance = True
+        attendance.save()
+    except:
+        pass
+    return redirect(f"/coach/edit/{pk}")
 
 def activity(request):
     coaches = Coach.objects.all().order_by("-id")

@@ -9,6 +9,32 @@ from package.models import Package
 from transaction.models import Debit, Bill
 from user.models import MetaData
 # Create your views here.
+
+months = {
+    'January': 1,
+    'February': 2,
+    'March': 3,
+    'April': 4,
+    'May': 5,
+    'June': 6,
+    'July': 7,
+    'August': 8,
+    'September': 9,
+    'October': 10,
+    'November': 11,
+    'December': 12
+}
+
+def adminView(request):
+    members = Member.objects.all().order_by("-due_payment")
+    packages = Package.objects.all().order_by("-id")
+
+    context = {
+        'members':members,
+        'packages':packages
+    }
+    return render(request,'member/admin_view.html',context)
+
 def index(request):
     members = Member.objects.all().order_by("-due_payment")
     packages = Package.objects.all().order_by("-id")
@@ -61,7 +87,7 @@ def index(request):
         Bill.objects.create(
             month = month,
             year=year,
-            reason='package_admission',
+            reason='admission',
             total_amount = package.price,
             payed_amount = amount,
             due_amount = due,
@@ -120,6 +146,21 @@ def edit(request,pk):
         'month':month
     }
     return render(request,"member/edit.html",context)
+
+def paymentHistory(request,pk,month,year):
+    member = Member.objects.get(id = pk)
+    payments = Debit.objects.filter(date__month=months[month],payed_by=member,date__year=year).order_by("-id")
+    month = datetime.now().strftime("%B")
+
+    print(payments)
+
+    context = {
+        'member':member,
+        'payments':payments,
+        'month':month
+    }
+    return render(request,'member/payment_history.html',context)
+
 
 def bill(request):
     members = Member.objects.filter(due_payment__gt =0,status=True).order_by("-due_payment")
@@ -193,20 +234,20 @@ def pay(request):
 
             if updateThisMonth:
                 bill = Bill.objects.get(member = member, month = month)
-                if amount > bill.due_amount:
-                    bill.advanced_amount = float(amount - bill.due_amount)
+                if float(amount) > bill.due_amount:
+                    bill.advanced_amount = float(amount) - bill.due_amount
                     bill.due_amount = 0
                 else:
-                    bill.due_amount -= amount
+                    bill.due_amount -= float(amount)
 
-                bill.payed_amount = float(total_amount)
+                bill.payed_amount += float(total_amount)
 
                 bill.save()
                 
 
             Debit.objects.create(
                 trxId = "FK-TRX-" + str(timestamp),
-                reason = "package",
+                reason = "package_fee",
                 amount = int(amount),
                 date = datetime.now(),
                 payed_by = member,
@@ -215,7 +256,6 @@ def pay(request):
             meta.funds += int(amount)
             meta.save()
             member.save()
-
 
         except:
             messages.error(request,"Wrong Member Id")

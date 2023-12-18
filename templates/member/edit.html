@@ -94,7 +94,7 @@
                     <tbody>
                         {% for bill in bills %}
                         <tr class="bg-white border text-sm text-center">
-                            <td class="px-6 py-4"><a class="underline" href="#">{{bill.month}}</a></td>
+                            <td class="px-6 py-4"><a class="underline" href="{% url "member:payment_history" member.id bill.month bill.year %}">{{bill.month}}</a></td>
                             <td class="px-6 py-4">{{bill.reason}}</td>
                             <td class="px-6 py-4">{{bill.total_amount}}</td>
                             <td class="px-6 py-4">{{bill.payed_amount}}</td>

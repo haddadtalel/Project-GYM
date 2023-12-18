@@ -69,6 +69,7 @@
                 <th scope="col" class="px-6 py-3">phone</th>
                 <th scope="col" class="px-6 py-3">salary</th>
                 <th scope="col" class="px-6 py-3">Status</th>
+                <th scope="col" class="px-6 py-3">Joining Date</th>
                 <th scope="col" class="px-6 py-3">View</th>
               </tr>
             </thead>
@@ -80,6 +81,7 @@
                 <td class="px-6 py-4">{{coach.phone}}</td>
                 <td class="px-6 py-4">{{coach.salary}}</td>
                 <td class="px-6 py-4">{{coach.status}}</td>
+                <td class="px-6 py-4">{{coach.join_date}}</td>
                 <td class="px-6 py-4"><a class="underline" href="{% url "coach:edit" coach.id %}">View</a></td>
               </tr>
               {% endfor %}

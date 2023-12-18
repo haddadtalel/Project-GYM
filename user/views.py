@@ -5,11 +5,12 @@ from datetime import datetime
 from user.models import User
 from schedule.models import Schedule
 from attendance.models import Attendance
+from transaction.models import Credit
 # Create your views here.
 def index(request):
     employees = User.objects.filter(is_employee = True)
     schedules = Schedule.objects.filter(name = 'stuff')
-
+    
     if request.method == "POST":
         username = request.POST.get("username")
         name = request.POST.get("name")
@@ -34,7 +35,8 @@ def index(request):
             salary = salary,
             address = address,
             password = make_password(password),
-            emp_id = "FKE-" + str(lastId+1)
+            emp_id = "FKE-" + str(lastId+1),
+            join_date = datetime.now()
         )
 
         for schedule in schedules_res:
@@ -42,13 +44,14 @@ def index(request):
 
     context = {
         'employees':employees,
-        'schedules':schedules
+        'schedules':schedules,
     }
     return render(request,'user/index.html',context)
 
 def edit(request,pk):
     employee = User.objects.get(id = pk)
     schedules = Schedule.objects.filter(name = 'stuff')
+    salaries = Credit.objects.filter(employee = employee)
 
     current_month = datetime.now().month
     current_year = datetime.now().year
@@ -84,9 +87,23 @@ def edit(request,pk):
     context = {
         'employee': employee,
         'schedules':schedules,
-        'attendance':attendance
+        'attendance':attendance,
+        'salaries':salaries
     }
     return render(request,"user/edit.html",context)
+
+def attendance(request,pk,id):
+    try:
+        employee = User.objects.get(id = pk)
+        attendance = Attendance.objects.get(employee = employee, id = id)
+        if attendance.attendance:
+            attendance.attendance = False
+        else:
+            attendance.attendance = True
+        attendance.save()
+    except:
+        pass
+    return redirect(f"/user/edit/{pk}")
 
 def deactivate(request,pk):
     employee = User.objects.get(id = pk)
