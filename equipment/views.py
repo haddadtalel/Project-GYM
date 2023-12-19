@@ -17,7 +17,6 @@ def index(request):
     if request.method == "POST":
         name = request.POST.get("name")
         brand = request.POST.get("brand")
-        costCondition = request.POST.get("costCondition")
         serial = request.POST.get("serial")
         price = request.POST.get("price")
 
@@ -35,6 +34,9 @@ def index(request):
             eq.equipmentType.add(eqT)
         
         timestamp = int(datetime.now().timestamp())
+
+        costCondition = "store"
+        
         if costCondition == "store":
             Credit.objects.create(
                 trxId = 'FK-TRX-' + str(timestamp),

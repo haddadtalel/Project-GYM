@@ -25,7 +25,10 @@ def index(request):
         ref = request.POST.get("red")
         schedules_res = request.POST.getlist("schedule")
 
-        lastId = Coach.objects.last().id
+        try:
+            lastId = Coach.objects.last().id
+        except:
+            lastId = 0
 
         coach = Coach.objects.create(
             name = name,
