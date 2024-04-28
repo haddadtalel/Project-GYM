@@ -35,14 +35,25 @@ The Gym Management System is built using the following technologies:
 - HTML
 - CSS
 - JavaScript
+- MySQL Database
 ## Installation
 To install and run the Gym Management System locally, please follow these steps:
 - Clone the repository: git clone [https://github.com/shz-code/fitness-kingdom-gym-ms.git](https://github.com/shz-code/fitness-kingdom-gym-ms.git)
 - Navigate to the project directory: cd gym-management-system
 - Create and activate a virtual environment (optional but recommended): 
-- On Linux/Mac:     ```python3 -m venv venv source venv/bin/activate ```    
-- On Windows:     ```python -m venv venv venv\Scripts\activate.bat    ```
+- On Linux/Mac:     
+```
+    python3 -m venv venv 
+    source venv/bin/activate 
+```    
+- On Windows:     
+```bash 
+    python -m venv venv 
+    venv\Scripts\activate  
+```
 - Install the dependencies: ```pip install -r requirements.txt```
+- Create a `.env` file in the **core** folder in the project directory. Set the required environment variables in the `.env` file. Refer to the `.env.example` file provided in the repository for details. 
+- Create a database named **fitnessKindgom** in MYSQL before running the below commands:
 - Perform database migrations: ```python manage.py migrate```
 - Start the development server: ```python manage.py runserver```
 - Open your web browser and access the application at http://localhost:8000
