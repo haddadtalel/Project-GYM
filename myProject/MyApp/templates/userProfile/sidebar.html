@@ -1,0 +1,27 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'usrprof.css' %}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<title> {% block title %}| GYM | {% endblock %} </title>
+{% block content %}
+
+<body>
+    
+  <div class="wrapper">
+      <div class="sidebar">
+          <h2>Dashboard</h2>
+          <ul>
+              
+              <li><a href="{% url 'profile' %}"><i class="fa-regular fa-user"></i> Profile</a></li>
+              <li><a href="{% url 'timetable' %}"><i class="fas fa-address-card"></i> Timetable</a></li>
+              <li><a href="#"><i class="fas fa-project-diagram"></i> Nutrition Plan</a></li>
+              <li><a href="#"><i class="fas fa-address-book"></i> Contact Instructor</a></li>
+              <li><a href="{% url 'home' %}"><i class="fas fa-sign-out-alt "></i> Back to Home</a></li>
+          </ul> 
+          
+      </div>
+
+      
+</body>
+
+{% endblock %}
+

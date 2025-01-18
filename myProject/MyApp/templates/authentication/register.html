@@ -1,0 +1,87 @@
+{% load static %}
+
+<!-- Link to your custom CSS for styling the authentication page -->
+<link rel="stylesheet" href="{% static 'reg.css' %}" />
+<title> {% block title %}| GYM | {% endblock %} </title>
+{% block content %}
+  <div class="auth-container">
+    <h2>Welcome to GYM !</h2>
+    <h2>Register</h2>
+    <!-- Display any non-field errors (general errors for the form) -->
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">
+        {% for error in form.non_field_errors %}
+          <p>{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- Registration Form -->
+    <form method="post">
+      {% csrf_token %}
+
+      <!-- Username Field -->
+      <div class="form-group">
+        <label for="id_username">Username</label>
+        {{ form.username }}  <!-- This will render the input for username -->
+        {% if form.username.errors %}
+          <div class="alert alert-danger">
+            {% for error in form.username.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="id_email">Email</label>
+        {{ form.email }}  <!-- This will render the input for email -->
+        {% if form.email.errors %}
+          <div class="alert alert-danger">
+            {% for error in form.email.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="id_password1">Password</label>
+        {{ form.password1 }}  <!-- This will render the input for password -->
+        {% if form.password1.errors %}
+          <div class="alert alert-danger">
+            {% for error in form.password1.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Confirm Password Field -->
+      <div class="form-group">
+        <label for="id_password2">Confirm Password</label>
+        {{ form.password2 }}  <!-- This will render the input for confirm password -->
+        {% if form.password2.errors %}
+          <div class="alert alert-danger">
+            {% for error in form.password2.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+
+    <!-- Login link -->
+    <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+  </div>
+
+  <!-- Load static JavaScript files (Bootstrap, jQuery, etc.) -->
+  <script src="{% static 'js/jquery-3.5.1.slim.min.js' %}"></script>
+  <script src="{% static 'js/popper.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+{% endblock %}

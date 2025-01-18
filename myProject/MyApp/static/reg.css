@@ -1,0 +1,73 @@
+
+body {
+    background-image: url("/static/assets/backg2.avif");
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    height: 100vh;  /* Full viewport height */
+    margin: 0 0 ;
+    padding: 0;
+  }
+  .auth-container {
+    max-width: 400px;
+    margin : 0 auto;
+    margin-top: 50px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .auth-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .auth-container .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .auth-container .form-group label {
+    font-weight: bold;
+  }
+  
+  .auth-container .form-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .auth-container .btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: rgb(2, 163, 2);
+    border: none;
+    color: white;
+    border-radius: 4px;
+  }
+  
+  .auth-container .btn:hover {
+    background-color: green;
+  }
+  
+  .auth-container .alert-danger {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
+  .auth-container p {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .auth-container p a {
+    color: #007bff;
+  }
+  
+  .auth-container p a:hover {
+    text-decoration: underline;
+  }
+  

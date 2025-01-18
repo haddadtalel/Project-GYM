@@ -1,0 +1,62 @@
+{% load static %}
+<title> {% block title %}| GYM | {% endblock %} </title>
+<link rel="stylesheet" href="{% static 'profile.css' %}" />
+{% block content %}
+
+{% include 'userProfile/sidebar.html' %}
+
+<div class="main_content">
+    <div class="header">Welcome, <span class="username">{{ user.username }}</span> to your Dashboard</div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="auth-container">
+                    <h2>My Profile</h2>
+
+                    <!-- Display the user's current profile picture -->
+                    <div class="profile-picture">
+                        {% if profile.profile_picture %}
+                            <img src="{{ profile.profile_picture.url }}" alt="Profile Picture">
+                        {% else %}
+                            <img src="{% static 'assets/client-2.jpg' %}" alt="Default Profile Picture">
+                        {% endif %}
+                    </div>
+
+                    <!-- Profile Picture Update Form -->
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <h3>Update Profile Picture</h3>
+                        <div class="form-group">
+                            {{ profile_picture_form.as_p }}
+                        </div>
+                        <button type="submit" name="profile_picture_submit" class="btn btn-primary">Update Profile Picture</button>
+                    </form>
+
+                    <!-- Email Update Form -->
+                    <form method="POST">
+                        {% csrf_token %}
+                        <h3>Update Email</h3>
+                        <div class="form-group">
+                            {{ email_form.as_p }}
+                        </div>
+                        <button type="submit" name="email_submit" class="btn btn-primary">Update Email</button>
+                    </form>
+
+                    <!-- Password Change Form -->
+                    <form method="POST">
+                        {% csrf_token %}
+                        <h3>Change Password</h3>
+                        <div class="form-group">
+                            {{ password_form.as_p }}
+                        </div>
+                        <button type="submit" name="password_submit" class="btn btn-primary">Change Password</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

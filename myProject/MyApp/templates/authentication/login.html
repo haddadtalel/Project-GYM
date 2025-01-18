@@ -1,0 +1,60 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'auth.css' %}" />
+<title> {% block title %}| GYM | {% endblock %} </title>
+{% block content %}
+  <div class="auth-container">
+    <h2>Welcome Back to GYM !</h2>
+    <h2>Login</h2>
+   
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <!-- Display any non-field errors (general errors for the form) -->
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">
+        {% for error in form.non_field_errors %}
+          <p>{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- Login Form -->
+    <form method="post">
+      {% csrf_token %}
+      
+      <!-- Username Field -->
+      <div class="form-group">
+        <label for="id_username">Username</label>
+        {{ form.username }}  <!-- This will render the input for username -->
+        {% if form.username.errors %}
+            <div class="alert alert-danger">
+                {% for error in form.username.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="id_password">Password</label>
+        {{ form.password }}  <!-- This will render the input for password -->
+        {% if form.password.errors %}
+            <div class="alert alert-danger">
+                {% for error in form.password.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+      </div>
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+    <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+  </div>
+
+{% endblock %}

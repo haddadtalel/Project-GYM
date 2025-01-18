@@ -1,0 +1,36 @@
+{% load static %}
+<title>{% block title %}| GYM | {% endblock %}</title>
+<link rel="stylesheet" href="{% static 'tt.css' %}" />
+
+{% block content %}
+{% include 'userProfile/sidebar.html' %}
+
+<div class="main_content">
+    <div class="header">Your Timetable</div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <!-- User Timetable Table -->
+                <h2>Your Timetable</h2>
+
+                    <!-- Display Existing Timetable Entries -->
+                    <ul>
+                        {% for entry in timetable_entries %}
+                        <li>
+                            <strong>{{ entry.class_name }}</strong> ({{ entry.start_time }} - {{ entry.end_time }})<br>
+                            Instructor: {{ entry.instructor }}<br>
+                            {{ entry.description }}<br>
+                        </li>
+                        {% empty %}
+                        <p>No timetable entries found.</p>
+                        {% endfor %}
+                    </ul>
+
+            </div>
+                    
+        </div>
+    </div>
+</div>
+
+{% endblock %}
