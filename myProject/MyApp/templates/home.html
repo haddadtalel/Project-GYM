@@ -4,6 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     
     <link
       href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css"
@@ -14,6 +15,7 @@
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
     />
     <link rel="stylesheet" href="{% static 'style.css' %}" />
+ 
     <title> {% block title %}| GYM | {% endblock %} </title>
   </head>
   <body>
@@ -52,7 +54,9 @@
           <h2>ISS FOR EVERY SUCCESS</h2>
           <p>Start by taking inspirations, continue it to give inspirations</p>
           <div class="header__btn">
-            <button class="btn btn__primary">GET STARTED</button>
+            <a href="{% url 'login' %}" class="btn btn__primary">
+              GET STARTED
+            </a>
           </div>
         </div>
       </div>
