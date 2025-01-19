@@ -10,8 +10,8 @@ class Profile(models.Model):
         return f"{self.user.username}'s Profile"
     
 
+
 class Timetable(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     class_name = models.CharField(max_length=255)
     instructor = models.CharField(max_length=255)
     start_time = models.DateTimeField()

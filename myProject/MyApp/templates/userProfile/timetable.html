@@ -1,34 +1,52 @@
 {% load static %}
 <title>{% block title %}| GYM | {% endblock %}</title>
 <link rel="stylesheet" href="{% static 'tt.css' %}" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
 {% block content %}
 {% include 'userProfile/sidebar.html' %}
 
 <div class="main_content">
-    <div class="header">Your Timetable</div>
-
     <div class="container">
-        <div class="row">
-            <div class="col-md-9">
-                <!-- User Timetable Table -->
-                <h2>Your Timetable</h2>
+        <!-- Table -->
+        <div class="classtime-table table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Time</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                        <th>Saturday</th>
+                        <th>Sunday</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for time, entries in timetable_entries_by_time.items %}
+                        <tr>
+                            <td class="workout-time">{{ time }}</td>
+                            {% for day in days_of_week %}
+                                <td>
+                                    {% for entry in entries %}
+                                        {% if entry.start_time|date:'l' == day %}
+                                            <div class="schedule-entry">
+                                                <span>{{ entry.start_time|date:'H:i' }} - {{ entry.end_time|date:'H:i' }}</span>
+                                                <h6>{{ entry.class_name }}</h6>
+                                                <p>Instructor :{{ entry.instructor }}</p>
+                                                <small>{{ entry.description }}</small>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
 
-                    <!-- Display Existing Timetable Entries -->
-                    <ul>
-                        {% for entry in timetable_entries %}
-                        <li>
-                            <strong>{{ entry.class_name }}</strong> ({{ entry.start_time }} - {{ entry.end_time }})<br>
-                            Instructor: {{ entry.instructor }}<br>
-                            {{ entry.description }}<br>
-                        </li>
-                        {% empty %}
-                        <p>No timetable entries found.</p>
-                        {% endfor %}
-                    </ul>
 
-            </div>
-                    
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

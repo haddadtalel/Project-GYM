@@ -1,26 +1,68 @@
-.timetable-container {
-    padding: 20px;
+/* Add a subtle hover effect on the table rows */
+.table-hover tbody tr:hover {
+    background-color: #f5f5f5;
 }
 
-.table {
-    width: 100%;
-    border-collapse: collapse;
+/* Style the individual timetable entry box */
+.schedule-entry {
+    padding: 10px;
+    background-color: #e9ecef;
+    border-radius: 4px;
 }
 
-.table th, .table td {
-    border: 1px solid #ddd;
-    padding: 8px;
+.schedule-entry h6 {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.schedule-entry p {
+    font-size: 0.95em;
+    margin: 0;
+}
+
+.schedule-entry small {
+    font-size: 0.8em;
+    color: #6c757d;
+}
+
+/* Styling the time slots column */
+.workout-time {
+    font-weight: bold;
+    background-color: #f8f9fa;
+    padding: 15px;
     text-align: center;
 }
 
-.table th {
-    background-color: #f2f2f2;
+/* Style for the form section */
+.form-group {
+    margin-bottom: 1.5em;
 }
 
-.table td {
-    background-color: #fff;
+.btn {
+    margin-top: 10px;
 }
 
-.table tr:nth-child(even) {
-    background-color: #f9f9f9;
+/* Add responsiveness to the table */
+@media (max-width: 767px) {
+    .table thead {
+        display: none;
+    }
+    .table tr {
+        margin-bottom: 10px;
+        display: block;
+        padding: 10px;
+    }
+    .table td {
+        display: block;
+        text-align: right;
+        font-size: 0.9em;
+        padding: 5px;
+    }
+    .table td:before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        text-transform: uppercase;
+    }
 }

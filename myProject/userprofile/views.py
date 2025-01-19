@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import Profile, ProfileForm, ProfilePictureForm, PasswordForm,Timetable, TimetableForm
 
-
+from collections import defaultdict
 
 
 @login_required
@@ -53,28 +53,38 @@ def profile_view(request):
         'profile_picture_form': profile_picture_form,
         'password_form': password_form,
     })
+
+
+
 @login_required
 def timetable_view(request):
-    # Fetch the user's profile and their timetable
-    user = request.user
-    timetable_entries = Timetable.objects.filter(user=user)
+    # Fetch all timetable entries
+    timetable_entries = Timetable.objects.all()
+
+    # Group timetable entries by start time
+    from collections import defaultdict
+    timetable_entries_by_time = defaultdict(list)
+    for entry in timetable_entries:
+        time_key = entry.start_time.strftime('%H:%M')  # Use start time as the grouping key
+        timetable_entries_by_time[time_key].append(entry)
+
+    # List of days to pass to the template
+    days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
     if request.method == 'POST':
         timetable_form = TimetableForm(request.POST)
 
         if timetable_form.is_valid():
-            # Save the new timetable entry for the user
-            new_timetable_entry = timetable_form.save(commit=False)
-            new_timetable_entry.user = user
-            new_timetable_entry.save()
+            # Save the new timetable entry
+            timetable_form.save()
             messages.success(request, "Timetable entry added successfully!")
-            return redirect('timetable')
+            return redirect('timetable')  # Redirect to the same page after saving
 
     else:
         timetable_form = TimetableForm()
 
     return render(request, 'userprofile/timetable.html', {
-        'user': user,
-        'timetable_entries': timetable_entries,
+        'timetable_entries_by_time': dict(timetable_entries_by_time),  # Pass grouped entries
+        'days_of_week': days_of_week,  # Pass days of the week
         'timetable_form': timetable_form,
     })
