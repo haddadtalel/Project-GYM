@@ -15,17 +15,18 @@
               <li><a href="{% url 'profile' %}"><i class="fa-regular fa-user"></i> Profile</a></li>
               <li><a href="{% url 'timetable' %}"><i class="fas fa-address-card"></i> Timetable</a></li>
               <li><a href="{% url 'beginners_routines' %}"><i class="fas fa-project-diagram"></i> Courses Portal</a></li>
-              <li><a href="#"><i class="fas fa-project-diagram"></i> Nutrition Plan</a></li>
+              <li><a href="{% url 'diet_beginner' %}"><i class="fas fa-apple-alt"></i> Nutrition Plan</a></li>
+              <li><a href="{% url 'bmimetric' %}"><i class="fas fa-heartbeat"></i> Calculate your BMI</a></li>
               <li><a href="#"><i class="fas fa-store"></i> Visit Store</a></li>
-              <li><a href="{% url 'bmistandard' %}"><i class="fa fa-circle-o"></i> Calculate your BMI</a></li>
-              <li><a href="#"><i class="fas fa-address-book"></i> Contact Instructor</a></li>
+              <li><a href="{% url 'feedback' %}"><i class="fas fa-address-book"></i> Send Feedback</a></li>
               <li><a href="{% url 'home' %}"><i class="fas fa-sign-out-alt "></i> Back to Home</a></li>
           </ul>
 
-      </div>
+      </div>   
 
       
 </body>
 
 {% endblock %}
 
+diet_beginner

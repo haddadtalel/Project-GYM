@@ -3,7 +3,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import Profile, ProfileForm, ProfilePictureForm, PasswordForm,Timetable, TimetableForm
-
+from .models import Feedback
 from collections import defaultdict
 
 
@@ -88,3 +88,20 @@ def timetable_view(request):
         'days_of_week': days_of_week,  # Pass days of the week
         'timetable_form': timetable_form,
     })
+
+@login_required
+def submit_feedback(request):
+    if request.method == "POST":
+        message = request.POST.get("message")
+
+        # Save feedback with the logged-in user
+        Feedback.objects.create(user=request.user, message=message)
+
+        # Display a success message and redirect back to the feedback page
+        messages.success(request, "Thank you for your feedback!")
+        return redirect('feedback')  # Change 'feedback' to the actual URL name for feedback page
+
+    # Get the feedback history for the logged-in user
+    feedback_history = Feedback.objects.filter(user=request.user).order_by('-submitted_at')
+
+    return render(request, "userprofile/feedback.html", {'feedback_history': feedback_history})

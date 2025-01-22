@@ -23,3 +23,16 @@ class Timetable(models.Model):
 
     class Meta:
         ordering = ['start_time']
+
+
+
+
+
+class Feedback(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="feedback")
+    message = models.TextField()
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.message[:50]  # Display the first 50 characters of the message
+

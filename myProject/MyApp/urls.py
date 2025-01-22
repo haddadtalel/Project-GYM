@@ -6,7 +6,7 @@ urlpatterns = [
     path("", views.home, name="home"),
     path('home/', views.home, name='home'),
     path('', include('authentication.urls')),
-    path('', include('userprofile.urls')),
+    path('profile/', include('userprofile.urls')),
     path('admin/', admin.site.urls),
     path("courses", views.beginners_routines, name="base2"),
     path("coursesportal", views.beginners_routines, name="beginners_routines"),
@@ -38,11 +38,11 @@ urlpatterns = [
     path("beginner_day_26", views.beginner_day26, name="beginner_day26"),
     path("beginner_day_27", views.beginner_day27, name="beginner_day27"),
     path("beginner_day_28", views.beginner_day28, name="beginner_day28"),
-    path("portal/diet/beginner", views.diet_beginner, name="diet_beginner"),
+    path("nutritionplan", views.diet_beginner, name="diet_beginner"),
     path("portal/diet/intermediate", views.diet_intermediate, name="diet_intermediate"),
     path("portal/diet/hardcore", views.diet_hardcore, name="diet_hardcore"),
-    path("know_your_BMI_with_standard_unit", views.bmistandard, name="bmistandard"),
-    path("know_your_BMI_with_metric_unit", views.bmimetric, name="bmimetric"),
+    path("BMI _Calculator_Standard", views.bmistandard, name="bmistandard"),
+    path("BMI _Calculator_Metric", views.bmimetric, name="bmimetric"),
 ]
 
 

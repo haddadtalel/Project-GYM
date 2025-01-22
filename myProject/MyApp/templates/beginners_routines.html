@@ -1,4 +1,4 @@
-{% extends 'base2.html' %}
+
 
 {% load static %}
 
@@ -13,9 +13,14 @@
         }
 </style>
 {% endblock %}
-
+{% include 'userProfile/sidebar.html' %}
 
 {% block body %}
+
+
+<div class="main_content">
+        <div class="timetable-container">
+            <div class="container">
 
 <div id="block-maf-workout-program-maf-workout-program-content" class="block block--maf-workout-program block--maf-workout-program-maf-workout-program-content even block-count-2">
         <div class="block__content">
@@ -204,6 +209,7 @@
   </div>
   </div>
 </div>
+</div></div></div>
 
 
 {% endblock %}

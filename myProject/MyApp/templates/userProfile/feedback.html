@@ -1,0 +1,75 @@
+{% load static %}
+<title>{% block title %}| GYM | {% endblock %}</title>
+<link rel="stylesheet" href="{% static 'tt.css' %}" />
+<link rel="stylesheet" href="{% static 'feedback.css' %}" />
+{% block content %}
+{% include 'userProfile/sidebar.html' %}
+
+<div class="main_content">
+    <div class="timetable-container">
+        <div class="container">
+            
+            <!-- Display success message if available -->
+            {% if messages %}
+            <div id="success-message" class="alert alert-success">
+                {% for message in messages %}
+                <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <div class="feedback-form">
+                <h2>Submit Your Feedback</h2>
+                <form method="post" action="{% url 'feedback' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="feedback-message">Your Feedback:</label>
+                        <textarea id="feedback-message" name="message" class="form-control" rows="4" placeholder="Write your feedback here..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+
+            <!-- Display the user's feedback history -->
+            <div class="feedback-history">
+                <h3>Your Feedback History</h3>
+                {% if feedback_history %}
+                    <div class="feedback-list">
+                        {% for feedback in feedback_history %}
+                            <div class="feedback-box">
+                                <!-- Display the submission date and feedback message inside a box -->
+                                <div class="feedback-date">
+                                    <strong>Date:</strong> {{ feedback.submitted_at|date:"F j, Y, g:i a" }}
+                                </div>
+                                <div class="feedback-message">
+                                   {{ feedback.message }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>You have not submitted any feedback yet.</p>
+                {% endif %}
+            </div>
+            
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+<!-- JavaScript to handle the auto-hide success message -->
+<script>
+    // Check if the success message exists
+    var successMessage = document.getElementById('success-message');
+    if (successMessage) {
+        // Show the message
+        successMessage.style.display = 'block';
+
+        // Hide the message after 7 seconds
+        setTimeout(function() {
+            successMessage.style.display = 'none';
+        }, 3000); // 7000 milliseconds = 7 seconds
+    }
+</script>

@@ -1,0 +1,19 @@
+/* Main content styling */
+.main-content {
+    flex-grow: 1; /* Allow main content to take the remaining space */
+    padding: 0px; /* Add some padding */
+    overflow-y: auto; /* Enable scrolling if content overflows vertically */
+}
+
+/* Optional styles for timetable container */
+.timetable-container {
+    width: 100%; /* Ensure it spans the available width */
+}
+
+/* Optional styles for article content */
+.article-content {
+    background-color: #ffffff; /* Optional background for content */
+    padding: 0px; /* Optional padding */
+    border-radius: 5px; /* Optional rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow */
+}

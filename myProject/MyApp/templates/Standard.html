@@ -1,3 +1,15 @@
+{% load static %}
+<title>{% block title %}| GYM | {% endblock %}</title>
+<link rel="stylesheet" href="{% static 'tt.css' %}" />
+
+
+{% include 'userProfile/sidebar.html' %}
+
+<div class="main_content">
+    <div class="timetable-container">
+        <div class="container">
+
+
 <html>
 
 <head>
@@ -111,6 +123,7 @@
       font-weight: bold;
     }
   </style>
+</div></div></div>
   <script>
     function bmi() {
       var weight = Number(document.getElementById("weight").value);

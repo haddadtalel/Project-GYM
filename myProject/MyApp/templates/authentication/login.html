@@ -58,3 +58,17 @@
   </div>
 
 {% endblock %}
+<!-- JavaScript to handle the auto-hide success message -->
+<script>
+  // Check if the success message exists
+  var successMessage = document.getElementById('success-message');
+  if (successMessage) {
+      // Show the message
+      successMessage.style.display = 'block';
+
+      // Hide the message after 7 seconds
+      setTimeout(function() {
+          successMessage.style.display = 'none';
+      }, 1000); // 7000 milliseconds = 7 seconds
+  }
+</script>
